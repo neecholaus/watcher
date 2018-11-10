@@ -1,11 +1,29 @@
-<div class="container-fluid font-roboto" id=header-con>
-    <div class=container id=header>
-        <h1 id=title>I'm Nick,</h1>
-        <h1 id=subtitle>a Full Stack Developer.</h1>
+<div class="container-fluid font-roboto" id="header-con">
+    <div class="container" id="header">
+        <h1 id="title">I'm Nick,</h1>
+        <h1 id="subtitle">a Full Stack Developer.</h1>
     </div>
 </div>
-<div class="container-fluid p-5" id=about-con>
-    <div class=container id=about>
-        <p>I specialize in many differenct technologies accross the entire development cycle.</p>
+<div class="container-fluid pt-5 pb-5" id="about-con">
+    <div class="container" id="about">
+        <div class="row">
+            <div class="col-lg-8">
+                <p>I specialize in many different technologies accross the entire development cycle. I am capable of
+                    taking a concept and bringing it through all stages into a deployable product. To do this I am
+                    capable of collaborating with multiple departments, a small team or just myself to acheive
+                    a specified goal.</p>
+            </div>
+            <div class="col-lg-4">
+                <p>I work with</p>
+                <ul class="p-0" id="technologies">
+                    <li *ngFor="let item of technologies">
+                        <p>
+                            <i class="{{ item.icon }}" [style.color]="item.color" [style.background]="item.back"></i>
+                            {{ item.name }}
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>

@@ -18,3 +18,27 @@
     font-size: 20px;
     color: #696969;
 }
+
+p {
+    text-align: justify;
+}
+
+#technologies {
+    list-style-type: none;
+}
+
+#technologies p {
+    display: flex;
+    align-self: center;
+    line-height:30px;
+    vertical-align: middle;
+    margin: 10px 0;
+    color: #989898;
+    font-size: 17px;
+}
+
+#technologies p i {
+    font-size: 30px;
+    margin-right: 10px;
+    padding: 0;
+}
