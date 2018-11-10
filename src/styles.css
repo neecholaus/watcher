@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+/** Colors 
+1B2F50 DARK BLUE
+EB8869 SALMON 
+**/
+
+/** Backgrounds **/
+* .bg-primary {
+    background-color: #1B2F50 !important;
+}
+
+/** Fonts Families**/
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+/** Text Colors **/
+.text-salmon {
+    color: #EB8869;
+}
+
+/** GLOBAL **/
+* {
+    font-family: 'Roboto', sans-serif;
+}
