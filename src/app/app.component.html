@@ -14,15 +14,20 @@
                     a specified goal.</p>
             </div>
             <div class="col-lg-4">
-                <p>I work with</p>
-                <ul class="p-0" id="technologies">
-                    <li *ngFor="let item of technologies">
-                        <p>
-                            <i class="{{ item.icon }}" [style.color]="item.color" [style.background]="item.back"></i>
-                            {{ item.name }}
-                        </p>
-                    </li>
-                </ul>
+                <p>I am fluent with the following technologies.</p>
+                <div class="p-0 pb-4 technologies">
+                    <div *ngFor="let item of technologies">
+                        <i class="{{ item.icon }}" [style.color]="item.color" [style.background]="item.back"
+                            data-toggle="tooltip" data-placement="top" [title]="item.name"></i>
+                    </div>
+                </div>
+                <p>In addition, I am comfortable using the following software and deployment tools.</p>
+                <div class="p-0 pb-4 technologies">
+                    <div *ngFor="let item of tools">
+                        <i class="{{ item.icon }}" [style.color]="item.color" [style.background]="item.back"
+                            data-toggle="tooltip" data-placement="top" [title]="item.name"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

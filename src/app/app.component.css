@@ -16,28 +16,23 @@
 
 #about {
     font-size: 20px;
-    color: #696969;
+    color: #787878;
 }
 
 p {
     text-align: justify;
 }
 
-#technologies {
+.technologies {
     list-style-type: none;
 }
 
-#technologies p {
+.technologies {
     display: flex;
-    align-self: center;
-    line-height:30px;
-    vertical-align: middle;
-    margin: 10px 0;
-    color: #989898;
-    font-size: 17px;
+    flex-wrap: wrap;
 }
 
-#technologies p i {
+.technologies i {
     font-size: 30px;
     margin-right: 10px;
     padding: 0;
