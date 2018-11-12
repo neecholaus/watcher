@@ -1,7 +1,7 @@
 #header-con {
     padding-top: 200px !important;
-    padding-bottom: 25px;
-    background: linear-gradient(45deg, #1B2F50, rgba(27,47,80,0.6));
+    padding-bottom: 25px;    
+    background: linear-gradient(45deg, #BE2B41, #BE2B41);
 }
 
 #header #pretitle {
@@ -10,8 +10,8 @@
 }
 
 #header #title {
-    font-size: 70px !important;
-    color: #EB8869;
+    font-size: 70px !important;    
+    color: #1B2F50;
 }
 
 #header #subtitle {
