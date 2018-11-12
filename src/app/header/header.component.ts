@@ -7,19 +7,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
     phrases: string[] = [
-        'problem solver',
-        'critical thinker',
-        'valuable asset',
-        'Full Stack Developer'
+        'full stack developer.',
+        'problem solver.',
+        'critical thinker.',
+        'valuable asset.'
     ];
 
     currentPhrase = this.phrases[0];
 
-    currentLetters: string = '';
+    displayed: string = '';
 
-    currentSplitLetters: string[] = this.currentPhrase.split('');
+    letterBank: string[] = this.currentPhrase.split('');
 
     index = 0;
+
+    phraseHighlight: string = 'transparent';
+
+    resetPhrase() {
+        this.currentPhrase = this.phrases[this.index];
+        this.displayed = '';
+        this.letterBank = this.currentPhrase.split('');
+        this.phraseHighlight = 'transparent';
+    }
 
     ngOnInit() {
         let self = this;
@@ -30,13 +39,20 @@ export class HeaderComponent implements OnInit {
 
         setInterval(() => {
             // If letters in split array
-            if (self.currentSplitLetters.length >= 1) {
+            if (self.letterBank.length >= 1) {
                 // Add letter
-                self.currentLetters += self.currentSplitLetters.splice(0, 1);
+                self.displayed += self.letterBank.splice(0, 1);
             } else {
-                endCount++;
+                endCount += 50;
 
-                if (endCount > 30) {
+                // Add highlight effect after 3.5 seconds
+                if (endCount > 3500) {
+                    self.phraseHighlight = 'rgb(66, 134, 244)';
+                }
+
+                // Wait 4 seconds
+                // Then change phrases
+                if (endCount > 4000) {
                     endCount = 0;
 
                     // If at end of phrases
@@ -48,9 +64,7 @@ export class HeaderComponent implements OnInit {
                         self.index++
                     }
 
-                    self.currentPhrase = self.phrases[self.index];
-                    self.currentLetters = '';
-                    self.currentSplitLetters = self.currentPhrase.split('');
+                    self.resetPhrase();
                 }
             }
         }, 50);

@@ -18,12 +18,14 @@
     font-size: 30px !important;
     color: white;
     position: relative;
+    display: inline-block;
+    margin: 0;
 }
 
 #header #cursor {
     position: absolute;
     right: -5px;
-    top: 0px;
+    top: 5px;
     height: 35px;
     width: 3px;
     border-radius: 10px;
