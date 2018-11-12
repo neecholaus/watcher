@@ -1,0 +1,41 @@
+#header-con {
+    padding-top: 200px !important;
+    padding-bottom: 25px;
+    background: linear-gradient(45deg, #1B2F50, rgba(27,47,80,0.6));
+}
+
+#header #pretitle {
+    font-size: 30px;
+    color: white;
+}
+
+#header #title {
+    font-size: 70px !important;
+    color: #EB8869;
+}
+
+#header #subtitle {
+    font-size: 30px !important;
+    color: white;
+    position: relative;
+}
+
+#header #cursor {
+    position: absolute;
+    right: -5px;
+    top: 0px;
+    height: 35px;
+    width: 3px;
+    border-radius: 10px;
+    background: white;
+    animation: blip 1s infinite;
+}
+
+@keyframes blip {
+    0% {
+        opacity: 1;
+    }
+    25% {
+        opacity: 0;
+    }
+}

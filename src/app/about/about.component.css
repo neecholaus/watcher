@@ -1,0 +1,19 @@
+#about {
+    font-size: 20px;
+    color: #787878;
+}
+
+.technologies {
+    list-style-type: none;
+}
+
+.technologies {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.technologies i {
+    font-size: 30px;
+    margin-right: 10px;
+    padding: 0;
+}
