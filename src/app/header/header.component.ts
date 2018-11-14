@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-header',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+    @Output() tabChange = new EventEmitter<string>();
+
     phrases: string[] = [
         'full stack developer.',
         'problem solver.',
@@ -28,6 +30,10 @@ export class HeaderComponent implements OnInit {
         this.displayed = '';
         this.letterBank = this.currentPhrase.split('');
         this.phraseHighlight = 'transparent';
+    }
+
+    setTab(tab) {
+        this.tabChange.emit(tab);
     }
 
     ngOnInit() {

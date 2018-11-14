@@ -1,6 +1,10 @@
 /** Colors 
 1B2F50 DARK BLUE
 EB8869 SALMON 
+BE2B41 CRIMSON
+414A5C DARK GRAY
+DCD3B3 CREAM
+
 **/
 
 /** Backgrounds **/
@@ -14,11 +18,16 @@ EB8869 SALMON
 }
 
 /** Text Colors **/
-.text-salmon {
-    color: #EB8869;
+.text-grey {
+    color: #1B2F50;
 }
 
 /** GLOBAL **/
 * {
     font-family: 'Roboto', sans-serif;
+}
+
+p {
+    font-size: 20px;
+    color: #787878;
 }
