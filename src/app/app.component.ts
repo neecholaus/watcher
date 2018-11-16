@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Tech } from './tech.model';
 
 @Component({
     selector: 'app-root',
@@ -7,7 +6,7 @@ import { Tech } from './tech.model';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    currentTab: string = 'about';
+    currentTab: string = 'work';
 
     setCurrentTab(tab) {
         this.currentTab = tab;

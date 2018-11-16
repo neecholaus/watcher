@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
     @Output() tabChange = new EventEmitter<string>();
+    currentTab = 'about';
 
     phrases: string[] = [
         'full stack developer.',
@@ -33,6 +34,7 @@ export class HeaderComponent implements OnInit {
     }
 
     setTab(tab) {
+        this.currentTab = tab;
         this.tabChange.emit(tab);
     }
 

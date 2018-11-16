@@ -31,3 +31,11 @@ p {
     font-size: 20px;
     color: #787878;
 }
+
+ul li {
+    font-size: 20px;
+    color: #464646;
+}
+ul li span {
+    color: #787878;
+}

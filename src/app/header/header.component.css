@@ -2,6 +2,10 @@ nav.navbar {
     background: rgba(0,0,0,0.3);
 }
 
+.nav-link {
+    cursor: pointer !important;
+}
+
 #header-con {
     padding: 0;
     padding-bottom: 25px;    
@@ -9,7 +13,7 @@ nav.navbar {
 }
 
 #header {
-    padding-top: 150px !important;
+    padding-top: 100px !important;
 }
 
 #header #pretitle {
