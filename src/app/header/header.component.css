@@ -4,6 +4,8 @@ nav.navbar {
 
 .nav-link {
     cursor: pointer !important;
+    margin: 0 !important;
+    padding: 0 10px 0 0 !important;
 }
 
 #header-con {
