@@ -10,8 +10,6 @@ nav.navbar {
 
 #header-con {
     padding: 0;
-    padding-bottom: 25px;    
-    background: linear-gradient(45deg, #BE2B41, #BE2B41);
     background: #1097F7;
 }
 
@@ -55,4 +53,31 @@ nav.navbar {
     25% {
         opacity: 0;
     }
+}
+
+#tabs {
+    margin: 40px 0 0 0;
+    padding: 0;
+}
+
+#tabs p {    
+    padding-right: 20px;
+    padding-bottom: 15px;
+    color: white;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0;
+    transition: all ease 0.3s;
+}
+
+#tabs p.active .arrow {
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 15px);
+    width: 0 !important;
+    height: 0 !important;
+    border-bottom: solid 8px white;
+    border-right: solid 8px transparent;
+    border-left: solid 8px transparent;
 }
