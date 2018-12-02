@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit {
 
                 // Add highlight effect after 3.5 seconds
                 if (endCount > 3500) {
-                    self.phraseHighlight = '#42f4a4';
+                    self.phraseHighlight = 'rgba(13,137,88,0.8)';
                 }
 
                 // Wait 4 seconds

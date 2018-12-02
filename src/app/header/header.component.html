@@ -1,17 +1,20 @@
-<div class="container-fluid font-roboto" id="header-con">
-    <div class="container" id="header">
-        <h1 id="pretitle">My name is</h1>
-        <h1 id="title">Nick Neuman,</h1>
-        <p id="subtitle">and I'm a <span [style.background]="phraseHighlight">{{ displayed }}</span><span id="cursor"></span></p>
+<div class="container-fluid font-roboto p-0" id="header-con">
+    <div class="container-fluid p-0" id="header-overlay">
+        <div class="container" id="header">
+            <h1 id="pretitle">My name is</h1>
+            <h1 id="title">Nick Neuman,</h1>
+            <p id="subtitle">and I'm a <span [style.background]="phraseHighlight">{{ displayed }}</span><span id="cursor"></span></p>
 
-        <div id="tabs">
-            <p [ngClass]="currentTab === 'about' ? 'active' : ''" (click)="setTab('about')">
-                About
-                <span class="arrow"></span>
-            </p>
-            <p [ngClass]="currentTab === 'work' ? 'active' : ''" (click)="setTab('work')">
-                Work
-                <span class="arrow"></span>
-            </p>
+            <div id="tabs">
+                <p [ngClass]="currentTab === 'about' ? 'active' : ''" (click)="setTab('about')">
+                    About
+                    <span class="arrow"></span>
+                </p>
+                <p [ngClass]="currentTab === 'work' ? 'active' : ''" (click)="setTab('work')">
+                    Work
+                    <span class="arrow"></span>
+                </p>
+            </div>
         </div>
     </div>
+</div>

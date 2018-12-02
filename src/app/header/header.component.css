@@ -1,19 +1,20 @@
-nav.navbar {
-    background: rgba(0,0,0,0.3);
-}
-
 .nav-link {
     cursor: pointer !important;
     margin: 0 !important;
     padding: 0 10px 0 0 !important;
 }
 
-#header-con {
-    padding: 0;
-    background: #1097F7;
+#header-con {    
+    background-image: url('/assets/background-trees.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
-#header {
+#header-overlay {
+    background: rgba(0,0,0,0.5);
+}
+
+#header {    
     padding-top: 100px !important;
 }
 
@@ -23,12 +24,12 @@ nav.navbar {
 }
 
 #header #title {
-    font-size: 70px !important;    
-    color: #1B2F50;
+    font-size: 70px;
+    color: white;
 }
 
 #header #subtitle {
-    font-size: 30px !important;
+    font-size: 30px;
     color: white;
     position: relative;
     display: inline-block;
@@ -80,4 +81,19 @@ nav.navbar {
     border-bottom: solid 8px white;
     border-right: solid 8px transparent;
     border-left: solid 8px transparent;
+}
+
+@media(max-width: 500px) {
+    #header #pretitle {
+        font-size: 20px;
+    }
+    #header #title {        
+        font-size: 10vw;
+    }
+    #header #subtitle {
+        font-size: 20px;
+    }
+    #cursor {
+        height: 20px !important;
+    }
 }
