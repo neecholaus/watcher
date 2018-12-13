@@ -1,0 +1,23 @@
+* {
+    font-family: monospace, sans-serif;    
+}
+
+input {
+
+    &.form-control {
+
+        &:focus {
+            border-color: #0069d9;
+            outline: none;
+            box-shadow: none;
+        }
+    }
+}
+
+button {
+    &.btn {
+        &.btn-primary {
+            
+        }
+    }
+}
