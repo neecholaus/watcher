@@ -1,11 +1,11 @@
 * {
-  font-family: monospace, sans-serif;
-}
+  font-family: monospace, sans-serif; }
 
 input.form-control:focus {
   border-color: #0069d9;
   outline: none;
-  box-shadow: none;
-}
+  box-shadow: none; }
 
-/*# sourceMappingURL=style.css.map */
+.toast, .toast * {
+  background-image: none !important;
+  box-shadow: none !important; }

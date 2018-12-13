@@ -14,10 +14,7 @@ input {
     }
 }
 
-button {
-    &.btn {
-        &.btn-primary {
-            
-        }
-    }
+.toast, .toast * {
+    background-image: none !important;
+    box-shadow: none !important;
 }

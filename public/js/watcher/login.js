@@ -5,14 +5,19 @@ let login = new Vue({
             username: null,
             password: null
         }
-    },    
+    },
     methods: {
         submit: function() {
-            axios.post('/watcher', {
+            axios.post('/watcher/login', {
                 username: this.username,
                 password: this.password
             }).then(function(response) {
-                console.log(response);
+                if(response.data) {
+                    window.location.reload();
+                } else {
+                    toastr.error('Invalid username or password.');
+                    this.username = this.password = null;
+                }
             }).catch(function(error) {
                 console.log(error);
             });
