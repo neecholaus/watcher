@@ -1,11 +1,38 @@
+/* COLORS */
+/* Global Styles */
 * {
   font-family: monospace, sans-serif; }
 
+/*  */
+nav.navbar .nav-item a.nav-link {
+  cursor: pointer; }
+
+/*  */
 input.form-control:focus {
   border-color: #0069d9;
   outline: none;
   box-shadow: none; }
 
+/* Backgrounds */
+.bg-faded {
+  background-color: #f3f3f3 !important; }
+
+/* */
 .toast, .toast * {
   background-image: none !important;
   box-shadow: none !important; }
+
+.camera {
+  padding: 15px 30px;
+  background: #f3f3f3;
+  margin: 0; }
+  .camera:hover {
+    cursor: pointer;
+    background: #e3e3e3; }
+  .camera.active {
+    background: #007bff; }
+    .camera.active p {
+      color: white !important; }
+  .camera p {
+    color: #a3a3a3;
+    margin: 0; }

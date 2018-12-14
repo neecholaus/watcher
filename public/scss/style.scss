@@ -1,7 +1,28 @@
+/* COLORS */
+$faded: #f3f3f3;
+$primary: #007bff;
+
+/* Global Styles */
 * {
     font-family: monospace, sans-serif;    
 }
 
+/*  */
+nav {
+    &.navbar {
+        
+        .nav-item {
+            a {
+                &.nav-link {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+
+/*  */
 input {
 
     &.form-control {
@@ -14,7 +35,36 @@ input {
     }
 }
 
+/* Backgrounds */
+.bg-faded {
+    background-color: $faded !important;
+}
+
+/* */
 .toast, .toast * {
     background-image: none !important;
     box-shadow: none !important;
+}
+
+.camera {
+    padding: 15px 30px;
+    background: #f3f3f3;
+    margin: 0;
+
+    &:hover {
+        cursor: pointer;
+        background: #e3e3e3;
+    }
+
+    &.active {
+        background: $primary;
+        p {
+        color: white !important;
+        }
+    }
+
+    p {
+        color: #a3a3a3;
+        margin: 0;
+    }
 }

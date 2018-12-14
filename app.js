@@ -7,6 +7,9 @@ const bcrypt = require('bcrypt');
 // DB
 const USER = require('./controllers/users.js');
 
+// API
+const api = require('./routes/api.js');
+
 let app = express();
 
 // Handle file parsing
@@ -30,11 +33,13 @@ app.use(expressSession({
     resave: false
 }));
 
+// Use grouped routes
+app.use('/api', api);
+
 // Home
 app.get('/', (req, res) => {
     res.render('index');
 });
-
 
 // Watcher
 app.get('/watcher', (req, res) => {
@@ -61,9 +66,7 @@ app.get('/watcher/login', (req, res) => {
 app.post('/watcher/login', (req, res) => {
     let valid = validateAuth(req.body);
 
-    if(valid) {
-        req.session.user = req.body;
-    };
+    req.session.user = valid ? USER.get(req.body)[0] : null;
 
     res.send(valid);
 });
@@ -74,6 +77,7 @@ app.get('/watcher/logout', (req, res) => {
 
     res.redirect('/watcher');
 });
+
 
 
 app.listen(4200);

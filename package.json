@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "scripts": {
     "bundle": "npx webpack",
-    "bundle-sass": "npx node-sass --include-path scss ./public/scss/style.scss ./public/css/style.css",
+    "bundle-sass": "npx node-sass --include-path scss ./public/scss/ ./public/css/",
     "bundle-sass-watch": "npx node-sass --watch --include-path scss ./public/scss/style.scss ./public/css/style.css"
   },
   "private": true,

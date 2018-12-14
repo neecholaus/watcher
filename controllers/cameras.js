@@ -1,10 +1,6 @@
 const db = require('../db.js');
-const TABLE = 'users';
+const TABLE = 'cameras';
 
 exports.get = function(constraints) {
     return db.get(TABLE, constraints);
-}
-
-exports.getProperties = function(constraints) {
-    // return db.get('properties', )
 }
