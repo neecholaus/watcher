@@ -13,7 +13,7 @@ let login = new Vue({
                 password: this.password
             }).then(function(response) {
                 if(response.data) {
-                    window.location.reload();
+                    window.location = '/watcher';
                 } else {
                     toastr.error('Invalid username or password.');
                     this.username = this.password = null;

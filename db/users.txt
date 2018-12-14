@@ -1,4 +1,1 @@
-{"username":"nick","password":"generic"}
-{"username":"nick","password":"test"}
-{"username":"zach","password":"generic"}
-{"username":"tasha","password":"generic"}
+{"username":"nick","password":"testing1!"}

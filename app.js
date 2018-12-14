@@ -45,14 +45,19 @@ app.get('/watcher', (req, res) => {
             layout: 'watcher'
         });
     } else {
-        res.render('watcher/login', {
-            script: 'watcher/login',
-            layout: 'watcher'
-        });
+        res.redirect('watcher/login');
     }
 });
 
 // Log into watcher
+app.get('/watcher/login', (req, res) => {
+    res.render('watcher/login', {
+        script: 'watcher/login',
+        layout: 'watcher'
+    });
+});
+
+// Submit Login credentials
 app.post('/watcher/login', (req, res) => {
     let valid = validateAuth(req.body);
 
@@ -64,10 +69,10 @@ app.post('/watcher/login', (req, res) => {
 });
 
 // Log out from watcher
-app.post('/watcher/logout', (req, res) => {
+app.get('/watcher/logout', (req, res) => {
     req.session.user = null;
 
-    res.send(true);
+    res.redirect('/watcher');
 });
 
 

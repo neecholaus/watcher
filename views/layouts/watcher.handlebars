@@ -9,21 +9,49 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
         <!-- Toastr -->
-        <link rel="stylesheet" href="css/toastr.css" />
+        <link rel="stylesheet" href="/css/toastr.css" />
 
         <!-- Main Stylesheet -->
-        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="/css/style.css" />
 
         <!-- Main JS -->
-        <script src="js/main.js"></script>
+        <script src="/js/main.js"></script>
 
         <!-- FontAwesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="/watcher"><i class="far fa-eye"></i> Watcher</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/watcher">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {{#if user }}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/watcher/logout">Logout</a>
+                        </li>
+                    {{ else }}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/watcher/login">Login</a>
+                        </li>
+                    {{/if}}
+                </ul>
+            </div>
+        </nav>
+
         {{{ body }}}
 
         <!-- Page Specific JS -->
-        <script src="js/{{ script }}.js"></script>
+        <script src="/js/{{ script }}.js"></script>
     </body>
 </html>
