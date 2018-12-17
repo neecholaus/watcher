@@ -1,1 +1,5 @@
-<h1>Watcher</h1>
+@extends('layouts.app')
+
+@section('content')
+    <p>Home</p>
+@endsection

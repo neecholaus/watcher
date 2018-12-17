@@ -15,4 +15,12 @@ Route::get('/', function () {
     return view('index');
 });
 
+
 Route::get('/watcher', 'WatcherController@index');
+Route::get('/watcher/login', 'WatcherController@login');
+
+Route::get('/users/{id}', 'WatcherController@user');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
