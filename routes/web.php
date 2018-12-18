@@ -16,11 +16,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/watcher', 'WatcherController@index');
-Route::get('/watcher/login', 'WatcherController@login');
-
-Route::get('/users/{id}', 'WatcherController@user');
-
+# Sticking with default urls for now
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+# Watcher dashboard
+Route::get('/watcher', 'WatcherController@index');
+

@@ -1,5 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.watcher')
 
 @section('content')
-    <p>Home</p>
+    <div class="container">
+        <h1>Dashboard</h1>
+    </div>
 @endsection
