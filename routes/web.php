@@ -16,9 +16,10 @@ Route::get('/', function () {
 });
 
 
-# Sticking with default urls for now
-Auth::routes();
-
+# Watcher Auth
+Route::group(['prefix' => 'watcher'], function() {
+    Auth::routes();
+});
 
 # Watcher dashboard
 Route::get('/watcher', 'WatcherController@index');

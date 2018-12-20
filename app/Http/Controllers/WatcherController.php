@@ -25,5 +25,4 @@ class WatcherController extends Controller
     {
         return view('watcher.index');
     }
-
 }
