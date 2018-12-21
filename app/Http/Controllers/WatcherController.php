@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 class WatcherController extends Controller
 {
     /**
+     * WatcherController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -16,15 +25,4 @@ class WatcherController extends Controller
     {
         return view('watcher.index');
     }
-
-    /**
-     * Displays login form
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function login()
-    {
-        return view('watcher.login');
-    }
-
 }

@@ -16,11 +16,11 @@ Route::get('/', function () {
 });
 
 
+# Watcher Auth
+Route::group(['prefix' => 'watcher'], function() {
+    Auth::routes();
+});
+
+# Watcher dashboard
 Route::get('/watcher', 'WatcherController@index');
-Route::get('/watcher/login', 'WatcherController@login');
 
-Route::get('/users/{id}', 'WatcherController@user');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
