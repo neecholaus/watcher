@@ -1,3 +1,11 @@
-@import "custom";
+// Custom styling
+@import "custom/custom";
+
+// Bootstrap
+@import '../../node_modules/bootstrap/scss/bootstrap';
+
+// FontAwesome
+$fa-font-path: '../../public/fonts/font-awesome/';
+@import '../../node_modules/font-awesome/scss/font-awesome';
 
 

@@ -4,9 +4,11 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "bundle-js": "npx webpack-cli",
-        "bundle-scss": "./node_modules/node-sass/bin/node-sass --include-path scss ./src/scss/app.scss ./public/css/style.css --output-style compressed;",
-        "bundle-all": "npx webpack-cli;./node_modules/node-sass/bin/node-sass --include-path scss ./src/scss/app.scss ./public/css/style.css --output-style compressed;"
+        "js": "npx webpack-cli",
+        "js-watch": "npx webpack-cli --watch",
+        "scss": "./node_modules/node-sass/bin/node-sass --include-path scss ./src/scss/app.scss ./public/css/style.css --output-style compressed;",
+        "scss-watch": "./node_modules/node-sass/bin/node-sass --include-path scss ./src/scss/app.scss ./public/css/style.css --output-style compressed --watch;",
+        "all": "npx webpack-cli;./node_modules/node-sass/bin/node-sass --include-path scss ./src/scss/app.scss ./public/css/style.css --output-style compressed;"
     },
     "repository": {
         "type": "git",
@@ -16,11 +18,14 @@
     "license": "MIT",
     "homepage": "https://bitbucket.org/father_nicolai/portfolio#readme",
     "dependencies": {
+        "axios": "^0.18.0",
         "bootstrap": "^4.1.3",
         "express": "^4.16.4",
         "express-handlebars": "^3.0.0",
+        "font-awesome": "^4.7.0",
         "jquery": "^3.3.1",
-        "popper": "^1.0.1"
+        "mongodb": "^3.1.10",
+        "popper.js": "^1.14.6"
     },
     "devDependencies": {
         "node-sass": "^4.11.0",

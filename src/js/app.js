@@ -1,5 +1,9 @@
-// Import Bootstrap
-require('../../node_modules/bootstrap/dist/js/bootstrap.bundle.min');
+// Import Bootstrap and dependencies
+import 'bootstrap';
+import 'popper.js';
 
-// Import jQuery
+// Require jQuery
 window.$ = window.jQuery = require('jquery');
+
+// Require Axios
+window.axios = require('../../node_modules/axios/dist/axios.min');
