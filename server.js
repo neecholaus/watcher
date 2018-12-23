@@ -1,9 +1,13 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const path = require('path');
+const bodyParser = require('body-parser');
+const mongo = require('mongodb');
+const session = require('express-session');
+const dotenv = require('dotenv');
 
-// MongoDB
-var mongo = require('mongodb');
+// Initialize ENV
+dotenv.config();
 
 // Configure templating engine
 let app = express();
@@ -14,8 +18,19 @@ app.set('view engine', 'handlebars');
 hbs = handlebars.create()
 hbs.getPartials();
 
+// Handle request bodies
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
 // Serve static assets
 app.use('/public', express.static(path.join(__dirname, 'public')));
+
+// Allow sessions
+app.use(session({
+    secret: 'string',
+    saveUninitialized: false,
+    resave: false
+}));
 
 // Main page
 app.get('/', (req, res) => {

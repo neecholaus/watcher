@@ -1,81 +1,158 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
-// MongoDB
-var mongo = require('mongodb');
 
+// MongoDB Config
+let mongoUser = process.env.MONGO_USER;
+let mongoPass = process.env.MONGO_PASS;
+let authUrl = `mongodb://${mongoUser}:${mongoPass}@localhost:27017/watcher?authSource=admin`;
+mongoose.connect(authUrl, {useNewUrlParser: true}, function(err) {
+    if(err) throw err;
+});
+
+// Models
+const User = require('../models/user.js');
+
+// Route constants
 const ROUTE = {
     login: '/watcher/login',
     register: '/watcher/register',
     index: '/watcher',
-}
+    logout: '/watcher/logout'
+};
 
-// Middleware
-router.use(function Guard(req, res, next) {
-    let origin = req.originalUrl;
 
-    _handleRoute(origin);
-    next();
+/**
+ * Middleware
+ */
+router.use(_handleRoute);
+
+
+/**
+ * Display dashboard
+ */
+router.get('/', (req, res) => {
+    res.render('watcher/index', {
+        title: 'Dashboard | Watcher',
+        layout: 'watcher',
+        user: req.session.user
+    });
 });
 
-// Dashboard
-router.get('/', (req, res) => {
-    let MongoClient = mongo.MongoClient;
-    let url = 'mongodb://localhost:27017/watcher';
-    let data;
-    MongoClient.connect(url, {useNewUrlParser:true},function(err, connection) {
-        if(err) {
-            console.log('Unable to connect to MongoDB.');
+
+/**
+ * Display login form
+ */
+router.get('/login', (req, res) => {
+    res.render('watcher/login', {
+        title: 'Login | Watcher',
+        layout: 'watcher',
+        errors: req.session.errors
+    });
+    req.session.errors = [];
+});
+
+
+/**
+ * Handle login submission
+ */
+router.post('/login', (req, res) => {
+    User.findOne({
+        email: req.body.email
+    }, (err, data) => {
+        let passwordMatch = data ? bcrypt.compareSync(req.body.password, data.password): false;
+        if(data && passwordMatch) {
+            req.session.user = data;
+            res.redirect('/watcher');
         } else {
-            let db = connection.db('watcher');
-            let users = db.collection('users');
-            users.find({}).toArray((err, dbRes) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    data = JSON.stringify(dbRes);
-                    res.render('watcher/index', {
-                        title: 'Dashboard | Watcher',
-                        layout: 'watcher',
-                        users: data
-                    });
-                }
-            });
+            if(!data) req.session.errors.push('Email is not tied to an account');
+            if(!passwordMatch) req.session.errors.push('Password is incorrect');
+            res.redirect('/watcher/login');
         }
     });
 });
 
-// Login
-router.get('/login', (req, res) => {
-    res.render('watcher/login', {
-        title: 'Login | Watcher',
-        layout: 'watcher'
-    });
+
+/**
+ * Handle logout
+ */
+router.get('/logout', (req, res) => {
+    req.session.user = null;
+
+    res.redirect('/watcher/login');
+    return;
 });
 
-// Register
+
+/**
+ * Display register form
+ */
 router.get('/register', (req, res) => {
     res.render('watcher/register', {
         title: 'Register | Watcher',
-        layout: 'watcher'
+        layout: 'watcher',
+        errors: req.session.errors
+    });
+    req.session.errors = [];
+});
+
+
+/**
+ * Handle register submission
+ */
+router.post('/register', (req, res) => {
+    let userExists = User.findOne({email: req.body.email}, (err, user) => {
+        if(user) {
+            req.session.errors.push('User already exists with that email.');
+            res.redirect('/watcher/register');
+        } else {
+            let user = new User({
+                _id: new mongoose.Types.ObjectId(),
+                name: req.body.name,
+                email: req.body.email,
+                password: bcrypt.hashSync(req.body.password, 8)
+            })
+                .save()
+                .then(result => {
+                    req.session.user = result;
+                    res.redirect('/watcher');
+                })
+                .catch(err => {
+                    req.session.errors.push('Something went wrong.');
+                    res.redirect('/watcher/register')
+                });
+        }
     });
 });
 
-function _handleRoute(route) {
-    switch(route) {
+function _handleRoute(req, res, next) {
+    let origin = req.originalUrl;
+    if(!req.session.errors) req.session.errors = [];
+
+    switch(origin) {
         case ROUTE.index:
-            // require auth
-            console.log('need auth');
+            if(!req.session.user) {
+                res.redirect('/watcher/login');
+                return false;
+            }
             break;
         case ROUTE.login:
-            // guest
-            console.log('guest');
+            if(req.session.user) {
+                res.redirect('/watcher');
+                return false;
+            }
             break;
         case ROUTE.register:
-            // require temporary token
-            console.log('need token');
+            if(req.session.user) {
+                res.redirect('/watcher');
+                return false;
+            }
             break;
     }
+
+    next();
 }
 
 module.exports = router;

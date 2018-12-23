@@ -1,3 +1,26 @@
 <div class="container pt-4">
-    <h5>Register</h5>
+    <div class="row">
+        <div class="col-md-10 col-lg-8 col-xl-6 mx-auto bg-white rounded p-4">
+            {{#if errors}}
+                {{#each errors}}
+                    <div class="alert alert-danger">
+                        <i class="fa fa-exclamation-triangle"></i> {{this}}
+                    </div>
+                {{/each}}
+            {{/if}}
+            <h5 class="mt-2 mb-4">Register</h5>
+            <form action="/watcher/register" method="POST">
+                <label>Name</label>
+                <input type="text" class="form-control mb-3" name="name" required />
+
+                <label>Email</label>
+                <input type="text" class="form-control mb-3" name="email" required />
+
+                <label>Password</label>
+                <input type="password" class="form-control mb-3" name="password" required />
+
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+        </div>
+    </div>
 </div>
