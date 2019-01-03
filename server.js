@@ -15,7 +15,7 @@ app.engine('handlebars', handlebars({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 // Support partial templates
-hbs = handlebars.create()
+hbs = handlebars.create();
 hbs.getPartials();
 
 // Handle request bodies
@@ -44,4 +44,4 @@ let watcher = require('./routes/watcher');
 app.use('/watcher', watcher);
 
 
-app.listen(8000);
+app.listen(3000, 'localhost');
