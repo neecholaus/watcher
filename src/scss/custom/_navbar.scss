@@ -1,0 +1,29 @@
+nav {
+    &.navbar {
+        .navbar-toggler {
+            border: none;
+            background: rgba(255,255,255,0.1);
+
+            &.collapsed {
+                #collapsed {
+                    display: block;
+                }
+                #collapse {
+                    display: none;
+                }
+            }
+            &:not(.collapsed) {
+                #collapsed {
+                    display: none;
+                }
+                #collapse {
+                    display: block;
+                }
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
