@@ -1,1 +1,12 @@
+@import 'fonts';
+
 $primary: #0065b3;
+
+nav {
+    &.navbar {
+        background-image: url('/public/images/navbar-back.jpg') !important;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+}
