@@ -14,13 +14,16 @@ mongoose.connect(authUrl, {useNewUrlParser: true}, function(err) {
 
 // Models
 const User = require('../models/user.js');
+const Token = require('../models/token.js');
 
 // Route constants
 const ROUTE = {
     login: '/watcher/login',
     register: '/watcher/register',
     index: '/watcher',
-    logout: '/watcher/logout'
+    logout: '/watcher/logout',
+    gen_invite: '/watcher/generate-invite',
+    gen_token: '/wathcer/gen-token'
 };
 
 
@@ -90,8 +93,76 @@ router.get('/logout', (req, res) => {
  * Display register form
  */
 router.get('/register', (req, res) => {
-    res.render('watcher/register', {
-        title: 'Register | Watcher',
+    let suppliedToken = req.query.token;
+
+    // Find token
+    Token.findOne({token: suppliedToken}, (err, token) => {
+        // Ensure token is valid and has not expired
+        if(token && new Date() < token.expired_at) {
+            res.render('watcher/register', {
+                title: 'Register | Watcher',
+                layout: 'watcher',
+                token: suppliedToken,
+                errors: req.session.errors
+            });
+            req.session.errors = [];
+        } else {
+            req.session.errors.push('Token was invalid.');
+            res.redirect('/watcher/login');
+        }
+    });
+});
+
+
+/**
+ * Handle register submission
+ */
+router.post('/register', (req, res) => {
+    let suppliedToken = req.body.token;
+
+    // Ensure token is valid
+    Token.findOne({token: suppliedToken}, (err, token) => {
+        // Make sure token has not expired
+        if(token && new Date() < token.expired_at) {
+            // Make sure user does not exist
+            User.findOne({email: req.body.email}, (err, user) => {
+                if (user) {
+                    req.session.errors.push('User already exists with that email.');
+                    res.redirect('/watcher/register');
+                } else {
+                    // Create user
+                    let user = new User({
+                        _id: new mongoose.Types.ObjectId(),
+                        name: req.body.name,
+                        email: req.body.email,
+                        password: bcrypt.hashSync(req.body.password, 8)
+                    })
+                        .save()
+                        .then(result => {
+                            req.session.user = result;
+                            res.redirect('/watcher');
+                        })
+                        .catch(err => {
+                            req.session.errors.push('Something went wrong.');
+                            res.redirect('/watcher/register')
+                        });
+                }
+            });
+        } else {
+            req.session.errors.push('Your token has expired.');
+            res.redirect('/watcher/login');
+        }
+    });
+});
+
+
+/**
+ * Admin route for generating invite links
+ */
+router.get('/generate-invite', (req, res) => {
+    res.render('watcher/admin/generate-invite', {
+        title: 'Send Invite',
+        user: req.session.user,
         layout: 'watcher',
         errors: req.session.errors
     });
@@ -100,35 +171,42 @@ router.get('/register', (req, res) => {
 
 
 /**
- * Handle register submission
+ * Admin route for generating new token
  */
-router.post('/register', (req, res) => {
-    let userExists = User.findOne({email: req.body.email}, (err, user) => {
-        if(user) {
-            req.session.errors.push('User already exists with that email.');
-            res.redirect('/watcher/register');
-        } else {
-            let user = new User({
-                _id: new mongoose.Types.ObjectId(),
-                name: req.body.name,
-                email: req.body.email,
-                password: bcrypt.hashSync(req.body.password, 8)
-            })
-                .save()
-                .then(result => {
-                    req.session.user = result;
-                    res.redirect('/watcher');
-                })
-                .catch(err => {
-                    req.session.errors.push('Something went wrong.');
-                    res.redirect('/watcher/register')
-                });
-        }
-    });
+router.post('/gen-token', (req, res) => {
+    let today = new Date();
+    let newToken = `${today.getFullYear()}${today.getMonth()}${today.getDay()}${today.getHours()}${today.getMinutes()}${today.getSeconds()}${today.getMilliseconds()}`;
+
+    new Token({
+        _id: new mongoose.Types.ObjectId(),
+        token: newToken
+    }).save(function(err) {
+            if(err) {
+                res.status(500);
+                res.end();
+            }
+
+            res.status(200);
+            res.json({
+                token: newToken
+            });
+        });
 });
 
+
+/**
+ * Route middleware
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {boolean}
+ * @private
+ */
 function _handleRoute(req, res, next) {
-    let origin = req.originalUrl;
+    // Removes trailing forward slashes
+    let origin = req.originalUrl.replace(/\/+(?=$|\s)/g, '');
+
     if(!req.session.errors) req.session.errors = [];
 
     switch(origin) {
@@ -147,6 +225,18 @@ function _handleRoute(req, res, next) {
         case ROUTE.register:
             if(req.session.user) {
                 res.redirect('/watcher');
+                return false;
+            }
+            break;
+        case ROUTE.gen_invite:
+            if(!req.session.user || !req.session.user.admin) {
+                res.redirect('/watcher/login');
+                return false;
+            }
+            break;
+        case ROUTE.gen_token:
+            if(!req.session.user || !req.session.user.admin) {
+                res.redirect('/watcher/login');
                 return false;
             }
             break;
