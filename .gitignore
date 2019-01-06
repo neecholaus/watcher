@@ -7,7 +7,7 @@
 /.vagrant
 Homestead.json
 Homestead.yaml
-/data
+/data/*
 
 # Miscellaneous
 .idea/*

@@ -204,7 +204,9 @@ router.post('/gen-token', (req, res) => {
  * @private
  */
 function _handleRoute(req, res, next) {
-    let origin = req.originalUrl;
+    // Removes trailing forward slashes
+    let origin = req.originalUrl.replace(/\/+(?=$|\s)/g, '');
+
     if(!req.session.errors) req.session.errors = [];
 
     switch(origin) {

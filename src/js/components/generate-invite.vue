@@ -5,7 +5,7 @@
                 <h5 class="mt-2 mb-4">Generate invite link</h5>
 
                 <div v-if="token" class="bg-light p-2 mb-4 text-muted rounded">
-                    <p class="m-0">https://nickneuman.co/watcher/register?token=<span class="text-danger font-weight-bold">{{ token }}</span></p>
+                    <p class="m-0">https://nickneuman.co/watcher/register?token=<span class="text-success font-weight-bold">{{ token }}</span></p>
                 </div>
 
                 <button type="button"
