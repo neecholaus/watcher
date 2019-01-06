@@ -21,7 +21,9 @@ const ROUTE = {
     login: '/watcher/login',
     register: '/watcher/register',
     index: '/watcher',
-    logout: '/watcher/logout'
+    logout: '/watcher/logout',
+    gen_invite: '/watcher/generate-invite',
+    gen_token: '/wathcer/gen-token'
 };
 
 
@@ -155,6 +157,44 @@ router.post('/register', (req, res) => {
 
 
 /**
+ * Admin route for generating invite links
+ */
+router.get('/generate-invite', (req, res) => {
+    res.render('watcher/admin/generate-invite', {
+        title: 'Send Invite',
+        user: req.session.user,
+        layout: 'watcher',
+        errors: req.session.errors
+    });
+    req.session.errors = [];
+});
+
+
+/**
+ * Admin route for generating new token
+ */
+router.post('/gen-token', (req, res) => {
+    let today = new Date();
+    let newToken = `${today.getFullYear()}${today.getMonth()}${today.getDay()}${today.getHours()}${today.getMinutes()}${today.getSeconds()}${today.getMilliseconds()}`;
+
+    new Token({
+        _id: new mongoose.Types.ObjectId(),
+        token: newToken
+    }).save(function(err) {
+            if(err) {
+                res.status(500);
+                res.end();
+            }
+
+            res.status(200);
+            res.json({
+                token: newToken
+            });
+        });
+});
+
+
+/**
  * Route middleware
  *
  * @param req
@@ -183,6 +223,18 @@ function _handleRoute(req, res, next) {
         case ROUTE.register:
             if(req.session.user) {
                 res.redirect('/watcher');
+                return false;
+            }
+            break;
+        case ROUTE.gen_invite:
+            if(!req.session.user || !req.session.user.admin) {
+                res.redirect('/watcher/login');
+                return false;
+            }
+            break;
+        case ROUTE.gen_token:
+            if(!req.session.user || !req.session.user.admin) {
+                res.redirect('/watcher/login');
                 return false;
             }
             break;

@@ -8,7 +8,8 @@
         "js-watch": "npx webpack-cli --watch",
         "scss": "./node_modules/node-sass/bin/node-sass --include-path scss ./src/scss/app.scss ./public/css/style.css --output-style compressed;",
         "scss-watch": "./node_modules/node-sass/bin/node-sass --include-path scss ./src/scss/app.scss ./public/css/style.css --output-style compressed --watch;",
-        "all": "npx webpack-cli;./node_modules/node-sass/bin/node-sass --include-path scss ./src/scss/app.scss ./public/css/style.css --output-style compressed;"
+        "all": "npx webpack-cli;./node_modules/node-sass/bin/node-sass --include-path scss ./src/scss/app.scss ./public/css/style.css --output-style compressed;",
+        "all-watch": "npx webpack-cli --watch;./node_modules/node-sass/bin/node-sass --include-path scss ./src/scss/app.scss ./public/css/style.css --output-style compressed --watch;"
     },
     "repository": {
         "type": "git",
@@ -22,6 +23,7 @@
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.18.3",
         "bootstrap": "^4.2.1",
+        "css-loader": "^2.1.0",
         "dotenv": "^6.2.0",
         "express": "^4.16.4",
         "express-handlebars": "^3.0.0",
@@ -30,7 +32,11 @@
         "jquery": "^3.3.1",
         "mongodb": "^3.1.10",
         "mongoose": "^5.4.0",
-        "popper.js": "^1.14.6"
+        "popper.js": "^1.14.6",
+        "toastr": "^2.1.4",
+        "vue": "^2.5.21",
+        "vue-loader": "^15.5.0",
+        "vue-template-compiler": "^2.5.21"
     },
     "devDependencies": {
         "node-sass": "^4.11.0",
