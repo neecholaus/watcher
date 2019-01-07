@@ -10,6 +10,7 @@ window.Vue = require('../../node_modules/vue/dist/vue');
 
 // Components
 Vue.component('generate-invite', require('./components/generate-invite.vue').default);
+Vue.component('upload-image', require('./components/upload-image.vue').default);
 
 // Main component
 new Vue({el: '#main'});

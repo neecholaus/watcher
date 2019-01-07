@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const multer = require('multer');
+const path = require('path');
 
 
 // MongoDB Config
@@ -12,9 +14,11 @@ mongoose.connect(authUrl, {useNewUrlParser: true}, function(err) {
     if(err) throw err;
 });
 
+
 // Models
 const User = require('../models/user.js');
 const Token = require('../models/token.js');
+
 
 // Route constants
 const ROUTE = {
@@ -23,7 +27,9 @@ const ROUTE = {
     index: '/watcher',
     logout: '/watcher/logout',
     gen_invite: '/watcher/generate-invite',
-    gen_token: '/wathcer/gen-token'
+    gen_token: '/wathcer/gen-token',
+    upload_image: '/watcher/upload-image',
+    upload_api: '/watcher/upload'
 };
 
 
@@ -40,8 +46,12 @@ router.get('/', (req, res) => {
     res.render('watcher/index', {
         title: 'Dashboard | Watcher',
         layout: 'watcher',
-        user: req.session.user
+        user: req.session.user,
+        errors: req.session.errors,
+        successes: req.session.successes
     });
+    req.session.errors = [];
+    req.session.successes = [];
 });
 
 
@@ -52,9 +62,11 @@ router.get('/login', (req, res) => {
     res.render('watcher/login', {
         title: 'Login | Watcher',
         layout: 'watcher',
-        errors: req.session.errors
+        errors: req.session.errors,
+        successes: req.session.successes
     });
     req.session.errors = [];
+    req.session.successes = [];
 });
 
 
@@ -103,9 +115,11 @@ router.get('/register', (req, res) => {
                 title: 'Register | Watcher',
                 layout: 'watcher',
                 token: suppliedToken,
-                errors: req.session.errors
+                errors: req.session.errors,
+                successes: req.session.successes
             });
             req.session.errors = [];
+            req.session.successes = [];
         } else {
             req.session.errors.push('Token was invalid.');
             res.redirect('/watcher/login');
@@ -164,9 +178,11 @@ router.get('/generate-invite', (req, res) => {
         title: 'Send Invite',
         user: req.session.user,
         layout: 'watcher',
-        errors: req.session.errors
+        errors: req.session.errors,
+        successes: req.session.successes
     });
     req.session.errors = [];
+    req.session.successes = [];
 });
 
 
@@ -195,6 +211,45 @@ router.post('/gen-token', (req, res) => {
 
 
 /**
+ * Admin route for testing image upload
+ */
+router.get('/upload-image', (req, res) => {
+    res.render('watcher/admin/upload-image', {
+        title: 'Upload Image',
+        user: req.session.user,
+        layout: 'watcher',
+        errors: req.session.errors,
+        successes: req.session.successes
+    });
+    req.session.errors = [];
+    req.session.successes = [];
+});
+
+
+
+// Init Storage
+// const upload = multer({dest: 'uploads/'});
+const storage = multer.diskStorage({
+    destination: 'uploads/',
+    filename: (req, file, cb) => {
+        let filename = Date.now().toString() + path.extname(file.originalname);
+        console.log(filename);
+        cb(null, filename);
+    }
+});
+const upload = multer({storage: storage});
+
+
+/**
+ * API route for uploading image
+ */
+router.post('/upload', upload.any(), (req, res, next) => {
+    req.session.successes.push('Image has been uploaded.');
+    res.redirect('/watcher/upload-image');
+});
+
+
+/**
  * Route middleware
  *
  * @param req
@@ -207,6 +262,7 @@ function _handleRoute(req, res, next) {
     // Removes trailing forward slashes
     let origin = req.originalUrl.replace(/\/+(?=$|\s)/g, '');
 
+    if(!req.session.successes) req.session.successes = [];
     if(!req.session.errors) req.session.errors = [];
 
     switch(origin) {
@@ -235,6 +291,18 @@ function _handleRoute(req, res, next) {
             }
             break;
         case ROUTE.gen_token:
+            if(!req.session.user || !req.session.user.admin) {
+                res.redirect('/watcher/login');
+                return false;
+            }
+            break;
+        case ROUTE.upload_image:
+            if(!req.session.user || !req.session.user.admin) {
+                res.redirect('/watcher/login');
+                return false;
+            }
+            break;
+        case ROUTE.upload_api:
             if(!req.session.user || !req.session.user.admin) {
                 res.redirect('/watcher/login');
                 return false;
