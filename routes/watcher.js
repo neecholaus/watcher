@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
 
 // MongoDB Config
@@ -12,9 +15,12 @@ mongoose.connect(authUrl, {useNewUrlParser: true}, function(err) {
     if(err) throw err;
 });
 
+
 // Models
 const User = require('../models/user.js');
 const Token = require('../models/token.js');
+const Capture = require('../models/capture.js');
+
 
 // Route constants
 const ROUTE = {
@@ -23,7 +29,11 @@ const ROUTE = {
     index: '/watcher',
     logout: '/watcher/logout',
     gen_invite: '/watcher/generate-invite',
-    gen_token: '/wathcer/gen-token'
+    gen_token: '/wathcer/gen-token',
+    upload_image: '/watcher/upload-image',
+    upload_api: '/watcher/upload',
+    recent_capture: '/watcher/most-recent',
+    capture: '/watcher/capture'
 };
 
 
@@ -34,14 +44,37 @@ router.use(_handleRoute);
 
 
 /**
+ * Image path middleware
+ */
+router.param('path', function(req, res, next, path) {
+    fs.readFile(__dirname + '/../uploads/' + path, function(err, data) {
+        if(err) {
+            console.log(err);
+            res.status(500);
+            res.end();
+        } else {
+            res.status(200);
+            res.set('Content-Type', 'image/jpg');
+            res.send(data);
+            res.end();
+        }
+    });
+});
+
+
+/**
  * Display dashboard
  */
 router.get('/', (req, res) => {
     res.render('watcher/index', {
         title: 'Dashboard | Watcher',
         layout: 'watcher',
-        user: req.session.user
+        user: req.session.user,
+        errors: req.session.errors,
+        successes: req.session.successes
     });
+    req.session.errors = [];
+    req.session.successes = [];
 });
 
 
@@ -52,9 +85,11 @@ router.get('/login', (req, res) => {
     res.render('watcher/login', {
         title: 'Login | Watcher',
         layout: 'watcher',
-        errors: req.session.errors
+        errors: req.session.errors,
+        successes: req.session.successes
     });
     req.session.errors = [];
+    req.session.successes = [];
 });
 
 
@@ -103,9 +138,11 @@ router.get('/register', (req, res) => {
                 title: 'Register | Watcher',
                 layout: 'watcher',
                 token: suppliedToken,
-                errors: req.session.errors
+                errors: req.session.errors,
+                successes: req.session.successes
             });
             req.session.errors = [];
+            req.session.successes = [];
         } else {
             req.session.errors.push('Token was invalid.');
             res.redirect('/watcher/login');
@@ -164,9 +201,11 @@ router.get('/generate-invite', (req, res) => {
         title: 'Send Invite',
         user: req.session.user,
         layout: 'watcher',
-        errors: req.session.errors
+        errors: req.session.errors,
+        successes: req.session.successes
     });
     req.session.errors = [];
+    req.session.successes = [];
 });
 
 
@@ -195,6 +234,79 @@ router.post('/gen-token', (req, res) => {
 
 
 /**
+ * Admin route for testing image upload
+ */
+router.get('/upload-image', (req, res) => {
+    res.render('watcher/admin/upload-image', {
+        title: 'Upload Image',
+        user: req.session.user,
+        layout: 'watcher',
+        errors: req.session.errors,
+        successes: req.session.successes
+    });
+    req.session.errors = [];
+    req.session.successes = [];
+});
+
+
+/**
+ * Handling file uploads
+ *
+ * @type {DiskStorage|DiskStorage}
+ */
+const storage = multer.diskStorage({
+    destination: 'uploads/',
+    filename: (req, file, cb) => {
+        let filename = Date.now().toString() + path.extname(file.originalname);
+        new Capture({
+            _id: new mongoose.Types.ObjectId(),
+            path: `/uploads/${filename}`,
+            filename: filename,
+            taken_at: req.body.taken_at
+        })
+            .save()
+            .then((result) => {
+                cb(null, filename);
+            })
+            .catch((err) => console.log(err));
+    }
+});
+const upload = multer({storage: storage});
+
+
+/**
+ * API route for uploading image
+ */
+router.post('/upload', upload.any(), (req, res, next) => {
+    req.session.successes.push('Image has been uploaded.');
+    res.redirect('/watcher/upload-image');
+});
+
+
+/**
+ * API route for fetching the most recent image
+ */
+router.get('/most-recent', (req, res) => {
+    Capture.findOne().sort({taken_at: -1})
+        .then((result) => {
+            res.status(200);
+            res.json(result);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
+});
+
+
+/**
+ * Private route for viewing captures
+ */
+router.get('/capture/:path', (req, res) => {});
+
+
+/**
  * Route middleware
  *
  * @param req
@@ -206,16 +318,12 @@ router.post('/gen-token', (req, res) => {
 function _handleRoute(req, res, next) {
     // Removes trailing forward slashes
     let origin = req.originalUrl.replace(/\/+(?=$|\s)/g, '');
+    console.log(origin);
 
+    if(!req.session.successes) req.session.successes = [];
     if(!req.session.errors) req.session.errors = [];
 
     switch(origin) {
-        case ROUTE.index:
-            if(!req.session.user) {
-                res.redirect('/watcher/login');
-                return false;
-            }
-            break;
         case ROUTE.login:
             if(req.session.user) {
                 res.redirect('/watcher');
@@ -240,6 +348,23 @@ function _handleRoute(req, res, next) {
                 return false;
             }
             break;
+        case ROUTE.upload_image:
+            if(!req.session.user || !req.session.user.admin) {
+                res.redirect('/watcher/login');
+                return false;
+            }
+            break;
+        case ROUTE.upload_api:
+            if(!req.session.user || !req.session.user.admin) {
+                res.redirect('/watcher/login');
+                return false;
+            }
+            break;
+        default:
+            if(!req.session.user) {
+                res.redirect('/watcher/login');
+                return false;
+            }
     }
 
     next();
