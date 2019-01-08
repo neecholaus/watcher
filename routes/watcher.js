@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 
 // MongoDB Config
@@ -18,6 +19,7 @@ mongoose.connect(authUrl, {useNewUrlParser: true}, function(err) {
 // Models
 const User = require('../models/user.js');
 const Token = require('../models/token.js');
+const Capture = require('../models/capture.js');
 
 
 // Route constants
@@ -29,7 +31,9 @@ const ROUTE = {
     gen_invite: '/watcher/generate-invite',
     gen_token: '/wathcer/gen-token',
     upload_image: '/watcher/upload-image',
-    upload_api: '/watcher/upload'
+    upload_api: '/watcher/upload',
+    recent_capture: '/watcher/most-recent',
+    capture: '/watcher/capture'
 };
 
 
@@ -37,6 +41,25 @@ const ROUTE = {
  * Middleware
  */
 router.use(_handleRoute);
+
+
+/**
+ * Image path middleware
+ */
+router.param('path', function(req, res, next, path) {
+    fs.readFile(__dirname + '/../uploads/' + path, function(err, data) {
+        if(err) {
+            console.log(err);
+            res.status(500);
+            res.end();
+        } else {
+            res.status(200);
+            res.set('Content-Type', 'image/jpg');
+            res.send(data);
+            res.end();
+        }
+    });
+});
 
 
 /**
@@ -226,15 +249,26 @@ router.get('/upload-image', (req, res) => {
 });
 
 
-
-// Init Storage
-// const upload = multer({dest: 'uploads/'});
+/**
+ * Handling file uploads
+ *
+ * @type {DiskStorage|DiskStorage}
+ */
 const storage = multer.diskStorage({
     destination: 'uploads/',
     filename: (req, file, cb) => {
         let filename = Date.now().toString() + path.extname(file.originalname);
-        console.log(filename);
-        cb(null, filename);
+        new Capture({
+            _id: new mongoose.Types.ObjectId(),
+            path: `/uploads/${filename}`,
+            filename: filename,
+            taken_at: req.body.taken_at
+        })
+            .save()
+            .then((result) => {
+                cb(null, filename);
+            })
+            .catch((err) => console.log(err));
     }
 });
 const upload = multer({storage: storage});
@@ -250,6 +284,29 @@ router.post('/upload', upload.any(), (req, res, next) => {
 
 
 /**
+ * API route for fetching the most recent image
+ */
+router.get('/most-recent', (req, res) => {
+    Capture.findOne().sort({taken_at: -1})
+        .then((result) => {
+            res.status(200);
+            res.json(result);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
+});
+
+
+/**
+ * Private route for viewing captures
+ */
+router.get('/capture/:path', (req, res) => {});
+
+
+/**
  * Route middleware
  *
  * @param req
@@ -261,17 +318,12 @@ router.post('/upload', upload.any(), (req, res, next) => {
 function _handleRoute(req, res, next) {
     // Removes trailing forward slashes
     let origin = req.originalUrl.replace(/\/+(?=$|\s)/g, '');
+    console.log(origin);
 
     if(!req.session.successes) req.session.successes = [];
     if(!req.session.errors) req.session.errors = [];
 
     switch(origin) {
-        case ROUTE.index:
-            if(!req.session.user) {
-                res.redirect('/watcher/login');
-                return false;
-            }
-            break;
         case ROUTE.login:
             if(req.session.user) {
                 res.redirect('/watcher');
@@ -308,6 +360,11 @@ function _handleRoute(req, res, next) {
                 return false;
             }
             break;
+        default:
+            if(!req.session.user) {
+                res.redirect('/watcher/login');
+                return false;
+            }
     }
 
     next();
