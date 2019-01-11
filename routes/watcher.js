@@ -30,7 +30,6 @@ const ROUTE = {
     logout: '/watcher/logout',
     gen_invite: '/watcher/generate-invite',
     gen_token: '/wathcer/gen-token',
-    upload_image: '/watcher/upload-image',
     upload_api: '/watcher/upload',
     recent_capture: '/watcher/most-recent',
     capture: '/watcher/capture'
@@ -234,22 +233,6 @@ router.post('/gen-token', (req, res) => {
 
 
 /**
- * Admin route for testing image upload
- */
-router.get('/upload-image', (req, res) => {
-    res.render('watcher/admin/upload-image', {
-        title: 'Upload Image',
-        user: req.session.user,
-        layout: 'watcher',
-        errors: req.session.errors,
-        successes: req.session.successes
-    });
-    req.session.errors = [];
-    req.session.successes = [];
-});
-
-
-/**
  * Handling file uploads
  *
  * @type {DiskStorage|DiskStorage}
@@ -318,7 +301,6 @@ router.get('/capture/:path', (req, res) => {});
 function _handleRoute(req, res, next) {
     // Removes trailing forward slashes
     let origin = req.originalUrl.replace(/\/+(?=$|\s)/g, '');
-    console.log(origin);
 
     if(!req.session.successes) req.session.successes = [];
     if(!req.session.errors) req.session.errors = [];
@@ -348,17 +330,25 @@ function _handleRoute(req, res, next) {
                 return false;
             }
             break;
-        case ROUTE.upload_image:
-            if(!req.session.user || !req.session.user.admin) {
-                res.redirect('/watcher/login');
-                return false;
-            }
-            break;
         case ROUTE.upload_api:
-            if(!req.session.user || !req.session.user.admin) {
-                res.redirect('/watcher/login');
+            let token = req.headers['authorization'].split(' ').pop();
+
+            // Weird formatting but it's what Node's docs say
+            // because new Buffer is deprecated.
+            let buffer1 = Buffer.from(token, 'base64');
+            let buffer2 = Buffer.from(buffer1);
+            let data = buffer2.toString().split(':');
+
+            let apiUser = data[0];
+            let apiPwd = data[1];
+
+            if(apiUser !== process.env.PI_USER
+                || apiPwd !== process.env.PI_PASS) {
+                res.status(403);
+                res.end();
                 return false;
             }
+
             break;
         default:
             if(!req.session.user) {
