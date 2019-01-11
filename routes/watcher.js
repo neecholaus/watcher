@@ -300,7 +300,7 @@ router.get('/capture/:path', (req, res) => {});
  */
 function _handleRoute(req, res, next) {
     // Removes trailing forward slashes
-    let origin = req.originalUrl.replace(/\/+(?=$|\s)/g, '');
+    let origin = req.originalUrl.replace(/\/+(?=$|\s)/g, '').split('?')[0];
 
     if(!req.session.successes) req.session.successes = [];
     if(!req.session.errors) req.session.errors = [];
