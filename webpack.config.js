@@ -11,7 +11,8 @@ module.exports = {
     },
     module: {
         rules: [
-            {test: /\.vue$/, loader:'vue-loader'}
+            {test: /\.vue$/, loader:'vue-loader'},
+            {test: /\.css$/, loader:['style-laoder','css-loader']}
         ]
     },
     plugins: [
