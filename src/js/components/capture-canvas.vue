@@ -1,15 +1,13 @@
 <template>
-    <div class="bg-light p-2 rounded mx-auto" style="max-width:500px;">
-        <div  v-if="imgSrc && capture">
-            <p class="badge badge-secondary rounded-0" style="font-size: 15px !important;">
-                Taken: <span class="badge bg-white text-dark rounded-0">{{ capture.taken_at }}</span>
-            </p>
-            <div class="text-center">
-                <img :src="imgSrc" class="img-fluid" />
-            </div>
+    <div class="bg-light p-2 rounded mx-auto" style="max-width:500px;" v-if="imgSrc && capture">
+        <p>Taken: <b>{{ capture.taken_at }}</b></p>
+        <div class="text-center">
+            <img :src="imgSrc" class="img-fluid" />
         </div>
-        <h5 v-else class="text-muted text-center mb-0"><i class="fa fa-exclamation-triangle"></i> No images could be found.</h5>
     </div>
+    <h5 v-else class="text-center rounded mx-auto p-2 bg-warning text-dark" style="max-width:500px;">
+        <h5 class="mb-0"><i class="fa fa-exclamation-triangle"></i> No images could be found.</h5>
+    </h5>
 </template>
 
 <script>

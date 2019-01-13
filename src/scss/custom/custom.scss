@@ -1,10 +1,11 @@
 @import 'fonts';
+@import 'inputs';
 @import 'navbar';
 
 $primary: #0065b3;
 
 nav {
-    &.navbar {
+    &.navbar:not(.no-back) {
         background-image: url('/public/images/navbar-back.jpg') !important;
         background-position: center;
         background-size: cover;
