@@ -15,6 +15,7 @@ window.axios = require('../../node_modules/axios/dist/axios.min');
 Vue.component('generate-invite', require('./components/generate-invite.vue').default);
 Vue.component('upload-image', require('./components/upload-image.vue').default);
 Vue.component('capture-canvas', require('./components/capture-canvas.vue').default);
+Vue.component('find-capture', require('./components/find-capture.vue').default);
 
 // Main component
 new Vue({el: '#main'});

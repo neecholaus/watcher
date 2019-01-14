@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-light p-2 rounded mx-auto" style="max-width:500px;" v-if="imgSrc && capture">
-        <p>Taken: <b>{{ capture.taken_at }}</b></p>
+    <div class="bg-light rounded p-2" v-if="imgSrc && capture">
+        <p><span class="text-muted">Taken:</span> <b>{{ capture.taken_at }}</b></p>
         <div class="text-center">
             <img :src="imgSrc" class="img-fluid" />
         </div>
