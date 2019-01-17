@@ -283,6 +283,22 @@ router.get('/most-recent', (req, res) => {
 });
 
 
+router.get('/times', (req, res) => {
+    Capture.find().select({taken_at:1, filename:1, _id:0}).sort({taken_at: -1})
+        .then((result) => {
+            res.status(200);
+            result.map((curr) => {
+                console.log(curr);
+            });
+            res.json(result);
+        })
+        .catch((err) => {
+            res.status(500);
+            res.end();
+        });
+});
+
+
 /**
  * Private route for viewing captures
  */

@@ -1,8 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+@import url('https://fonts.googleapis.com/css?family=Slabo+27px|Heebo:800');
 
 .font {
     &.slabo {
         font-family: 'Slabo 27px', sans-serif;
+    }
+
+    &.heebo {
+        font-family: 'Heebo', sans-serif;
     }
 
     &.bold {
