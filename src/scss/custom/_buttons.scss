@@ -1,0 +1,20 @@
+button {
+    &.slide-icon {
+        i {
+            margin-left: -10px;
+            color: transparent;
+            margin-right: 0;
+            transition: all ease 0.3s;
+        }
+
+        &:hover {
+            i {
+                margin-left: inherit;
+                color: inherit;
+                opacity: 1;
+                margin-right: 10px;
+                transition: all ease 0.3s;
+            }
+        }
+    }
+}
