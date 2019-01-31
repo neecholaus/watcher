@@ -12,6 +12,7 @@ window.Vue = require('../../node_modules/vue/dist/vue');
 window.axios = require('../../node_modules/axios/dist/axios.min');
 
 // Components
+Vue.component('login', require('./components/login.vue').default);
 Vue.component('generate-invite', require('./components/generate-invite.vue').default);
 Vue.component('upload-image', require('./components/upload-image.vue').default);
 Vue.component('capture-canvas', require('./components/capture-canvas.vue').default);

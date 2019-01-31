@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 mt-3">
                 <div class="p-2 rounded bg-light">
                     <h5 class="font heebo">Find a moment</h5>
                     <select class="form-control" name="time" v-model="specificCaptureFilename">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 mt-3">
                 <div class="bg-light rounded p-2" v-if="specificCaptureSrc">
                     <!--<p><span class="text-muted">Taken:</span> <b>{{ specificCapture.taken_at }}</b></p>-->
                     <div class="text-center">

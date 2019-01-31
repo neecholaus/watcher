@@ -1,32 +1,16 @@
-<div class="container-fluid" style="background: url('/public/images/watcher-login.jpg');background-size: cover;background-position: center;background-repeat: no-repeat;">
-    <div class="row">
-        <div class="col-md-6 col-lg-8"></div>
-        <div class="col-md-6 col-lg-4 mx-auto p-4 text-white" style="min-height:calc(100vh - 56px);background:rgba(0,0,0,0.5);">
+<div class="container-fluid" id="login-con">
+    <div class="row pt-5">
+        <div class="col-md-6 col-lg-4 mx-auto">
+            <div class="p-4" id="login-box">
             {{#if errors}}
                 {{#each errors}}
-                    <div class="alert bg-danger text-white rounded-0">
+                    <div class="alert bg-danger text-white rounded">
                         <i class="fa fa-exclamation-triangle mr-2"></i> {{this}}
                     </div>
                 {{/each}}
             {{/if}}
-            <h3 class="mt-2 mb-4 font heebo">Login</h3>
-            <form action="/watcher/login" method="POST">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text dark"><i class="fa fa-envelope"></i></span>
-                    </div>
-                    <input type="text" placeholder="Email" class="form-control dark transparent" name="email" autocomplete="off" required />
-                </div>
-
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text dark"><i class="fa fa-lock"></i></span>
-                    </div>
-                    <input type="password" placeholder="Password" class="form-control dark transparent" name="password" required />
-                </div>
-                <button type="submit" class="btn btn-outline-light mt-3 w-100 rounded-0"><i class="fa fa-sign-in mr-2"></i> Login</button>
-            </form>
-            <p class="mt-5" style="font-size: 13px">Created by Nick Neuman.</p>
+            <login></login>
+            </div>
         </div>
     </div>
 </div>

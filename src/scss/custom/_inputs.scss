@@ -1,9 +1,8 @@
 input {
-    border-radius: 0 !important;
     &.dark {
         background: black;
         color: white !important;
-        border-color: white;
+        border: none;
 
         &.transparent {
             background: rgba(0,0,0,0.4);
@@ -14,7 +13,7 @@ input {
         }
 
         &:focus {
-            border-color: white;
+            //border-color: white;
         }
     }
 
@@ -25,12 +24,19 @@ input {
 }
 
 .input-group {
-    .input-group-text {
-        border-radius: 0 !important;
-        &.dark {
-            border-color: white;
-            background: rgba(0,0,0,0.4);
-            color: white;
+    .input-group-prepend {
+        margin: 0;
+        .input-group-text {
+            border-top-right-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            border: none;
+            min-width: 40px;
+
+            &.dark {
+
+                background: rgba(0, 0, 0, 0.4);
+                color: white;
+            }
         }
     }
 }
