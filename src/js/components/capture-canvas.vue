@@ -2,46 +2,47 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 mt-3">
-                <div class="p-2 rounded bg-light">
+                <div class="raised-card">
                     <h5 class="font heebo">Find a moment</h5>
-                    <select class="form-control" name="time" v-model="specificCaptureFilename">
+                    <select class="form-control"
+                            name="time"
+                            v-model="specificCaptureFilename"
+                            @change="setSpecificCapture(specificCaptureFilename)">
                         <option selected disabled value="default">Please Select a Time:</option>
                         <option
-                                v-for="(time, i) in times"
+                                v-for="time in times"
                                 :value="time.filename">{{ formatDate(time.taken_at) }}</option>
                     </select>
                     <hr/>
                     <div class="text-right">
-                        <button class="btn btn-secondary"
+                        <button class="btn btn-outline-dark"
                                 @click="fetchTimes">
                             <i class="fa fa-refresh"
                                v-bind:class="{ 'fa-spin': !times }"></i>
                         </button>
-                        <button class="btn btn-warning"
-                                @click="specificCaptureSrc = null;">
-                            <i class="fa fa-clock-o"></i> Back to Current
+                        <button class="btn btn-outline-dark"
+                                @click="specificCaptureSrc = null">
+                            <i class="fa fa-circle text-danger"></i> Live
                         </button>
-                        <button class="btn btn-success"
-                                @click="setSpecificCapture(specificCaptureFilename)">Find</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-8 mt-3">
-                <div class="bg-light rounded p-2" v-if="specificCaptureSrc">
-                    <!--<p><span class="text-muted">Taken:</span> <b>{{ specificCapture.taken_at }}</b></p>-->
-                    <div class="text-center">
-                        <img :src="specificCaptureSrc" class="img-fluid" />
+                <div class="raised-card">
+                    <div class="text-center" v-if="specificCaptureSrc">
+                        <img :src="specificCaptureSrc" class="img-fluid" alt="Specific Moment" />
+                    </div>
+                    <div v-else-if="currentCaptureSrc && currentCapture">
+                        <p class="mb-0"><span class="text-muted">Taken:</span> <b>{{ currentCapture.taken_at }}</b></p>
+                        <hr/>
+                        <div class="text-center">
+                            <img :src="currentCaptureSrc" class="img-fluid" alt="Current Feed" />
+                        </div>
+                    </div>
+                    <div v-else class="text-center rounded mx-auto p-2 bg-warning text-dark" style="max-width:500px;">
+                        <h5 class="mb-0"><i class="fa fa-exclamation-triangle"></i> No images could be found.</h5>
                     </div>
                 </div>
-                <div class="bg-light rounded p-2" v-else-if="currentCaptureSrc && currentCapture">
-                    <p><span class="text-muted">Taken:</span> <b>{{ currentCapture.taken_at }}</b></p>
-                    <div class="text-center">
-                        <img :src="currentCaptureSrc" class="img-fluid" />
-                    </div>
-                </div>
-                <h5 v-else class="text-center rounded mx-auto p-2 bg-warning text-dark" style="max-width:500px;">
-                    <h5 class="mb-0"><i class="fa fa-exclamation-triangle"></i> No images could be found.</h5>
-                </h5>
             </div>
         </div>
     </div>
@@ -81,13 +82,13 @@
                         self.currentCaptureSrc = '/watcher/capture/' + res.data.filename;
                         self.currentCapture = res.data;
                         self.currentCapture.taken_at = self.formatDate(self.currentCapture.taken_at);
-                    }).catch((err) => {
+                    }).catch(() => {
                     self.currentCaptureSrc = null;
                     self.currentCapture = null;
                 });
             },
             formatDate: function(str) {
-                let meridiem = 'AM'
+                let meridiem = 'AM';
                 let obj = new Date(str);
                 let day = obj.toDateString();
 
@@ -124,3 +125,10 @@
         }
     }
 </script>
+
+<style scoped>
+     .img-fluid {
+         width: 100%;
+         max-width: 600px;
+     }
+</style>

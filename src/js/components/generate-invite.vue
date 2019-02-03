@@ -1,25 +1,29 @@
 <template>
-    <div class="container pt-4">
-        <div class="row">
-            <div class="col-md-10 col-lg-8 col-xl-6 mx-auto bg-white rounded p-4">
-                <h5 class="mt-2 mb-4">Generate invite link</h5>
+    <div class="bg-light" style="min-height: calc(100vh - 56px);">
+        <div class="container pt-4">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 col-xl-6 mx-auto">
+                    <div class="raised-card">
+                        <h5 class="mt-2 mb-4">Generate invite link</h5>
 
-                <div v-if="token" class="bg-light p-2 mb-4 text-muted rounded">
-                    <p class="m-0">https://nickneuman.co/watcher/register?token=<span class="text-success font-weight-bold">{{ token }}</span></p>
+                        <div v-if="token" class="bg-light p-2 mb-4 text-muted rounded">
+                            <p class="m-0">https://nickneuman.co/watcher/register?token=<span class="text-success font-weight-bold">{{ token }}</span></p>
+                        </div>
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                @click="fetchToken">
+                            <i :class="generateIcon"></i> {{ token ? 'New' : 'Generate' }}
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-primary"
+                                @click="copyLink"
+                                v-if="token">
+                            <i class="fa fa-clipboard"></i> Copy
+                        </button>
+                    </div>
                 </div>
-
-                <button type="button"
-                        class="btn btn-primary"
-                        @click="fetchToken">
-                    <i :class="generateIcon"></i> {{ token ? 'New' : 'Generate' }}
-                </button>
-
-                <button type="button"
-                        class="btn btn-primary"
-                        @click="copyLink"
-                        v-if="token">
-                    <i class="fa fa-clipboard"></i> Copy
-                </button>
             </div>
         </div>
     </div>
