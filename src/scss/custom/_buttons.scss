@@ -18,3 +18,17 @@ button {
         }
     }
 }
+
+.btn {
+    &.btn-transparent {
+        background: rgba(255,255,255,0.3);
+        color: white;
+        font-weight: 900;
+        border: none;
+
+        &:hover {
+            background: rgba(255,255,255,0.5);
+            color: white;
+        }
+    }
+}
