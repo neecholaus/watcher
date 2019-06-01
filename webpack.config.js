@@ -1,21 +1,33 @@
-const path = require('path');
-
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
-
 module.exports = {
-    mode: 'production',
-    entry: './src/js/app.js',
+    mode: 'development',
+    entry: {
+        portfolio: './src/js/apps/Portfolio/Portfolio.js',
+        watcher: './src/js/apps/Watcher/Watcher.js'
+    },
     output: {
-        path: path.resolve(__dirname, "public/js"),
-        filename: "index.js"
+        path: __dirname + "/public/js",
+        filename: "[name].js"
     },
     module: {
         rules: [
-            {test: /\.vue$/, loader:'vue-loader'},
-            {test: /\.css$/, loader:['style-loader','css-loader']}
+            {
+                test: /.jsx?$/,
+                loaders: 'babel-loader',
+                exclude: /node_modules/,
+                options: {
+                    presets: [
+                        '@babel/preset-env',
+                        '@babel/preset-react',
+                        {
+                            plugins: ['@babel/plugin-proposal-class-properties']
+                        }
+                    ]
+                }
+            },
+            {
+                test: /\.s?css$/, 
+                use: ['style-loader', 'css-loader', 'sass-loader']
+            }
         ]
-    },
-    plugins: [
-        new VueLoaderPlugin()
-    ]
+    }
 }

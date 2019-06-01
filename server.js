@@ -1,8 +1,6 @@
 const express = require('express');
-const handlebars = require('express-handlebars');
 const path = require('path');
 const bodyParser = require('body-parser');
-const mongo = require('mongodb');
 const session = require('express-session');
 const dotenv = require('dotenv');
 
@@ -11,12 +9,6 @@ dotenv.config();
 
 // Configure templating engine
 let app = express();
-app.engine('handlebars', handlebars({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
-
-// Support partial templates
-hbs = handlebars.create();
-hbs.getPartials();
 
 // Handle request bodies
 app.use(bodyParser.urlencoded({extended: false}));
@@ -32,16 +24,18 @@ app.use(session({
     resave: false
 }));
 
-// Main page
+// Main page but redirect for now
 app.get('/', (req, res) => {
-    res.render('index', {
-        title: 'nick neuman'
-    });
+    res.sendFile(__dirname + '/views/portfolio.html');
+});
+
+app.get('/watcher', (req, res) => {
+    res.sendFile(__dirname + '/views/watcher.html');
 });
 
 // Watcher
-let watcher = require('./routes/watcher');
-app.use('/watcher', watcher);
+// let watcher = require('./routes/watcher');
+// app.use('/watcher', watcher);
 
 
 app.listen(3000, 'localhost');

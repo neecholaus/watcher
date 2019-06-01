@@ -1,0 +1,27 @@
+.typewriter {
+    #phrase {
+        position: relative;
+    }
+
+    .cursor {
+        animation: ease-in-out 1s blink infinite;
+        border-radius: 4px;
+        padding: 2px;
+        position: absolute;
+        top: 0;
+        height: 80%;
+        right: 0;
+    }
+
+    @keyframes blink {
+        0% {
+            background: rgba(255,255,255,0);
+        }
+        50% {
+            background: rgba(255,255,255,1);
+        }
+        100% {
+            background: rgba(255,255,255,1)
+        }
+    }
+}
