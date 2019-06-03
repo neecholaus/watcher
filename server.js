@@ -29,13 +29,13 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/portfolio.html');
 });
 
-app.get('/watcher', (req, res) => {
-    res.sendFile(__dirname + '/views/watcher.html');
-});
+// app.get('/watcher', (req, res) => {
+//     res.sendFile(__dirname + '/views/watcher.html');
+// });
 
 // Watcher
-// let watcher = require('./routes/watcher');
-// app.use('/watcher', watcher);
+let watcher = require('./routes/watcher');
+app.use('/watcher', watcher);
 
 
 app.listen(3000, 'localhost');

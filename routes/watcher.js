@@ -64,32 +64,34 @@ router.param('path', function(req, res, next, path) {
 /**
  * Display dashboard
  */
-router.get('/', (req, res) => {
-    res.render('watcher/index', {
-        title: 'Dashboard | Watcher',
-        layout: 'watcher',
-        user: req.session.user,
-        errors: req.session.errors,
-        successes: req.session.successes
-    });
-    req.session.errors = [];
-    req.session.successes = [];
+router.get(['/', '/*'], (req, res) => {
+    // res.render('watcher/index', {
+    //     title: 'Dashboard | Watcher',
+    //     layout: 'watcher',
+    //     user: req.session.user,
+    //     errors: req.session.errors,
+    //     successes: req.session.successes
+    // });
+    // req.session.errors = [];
+    // req.session.successes = [];
+
+    res.sendFile(path.resolve(__dirname + '/../views/watcher.html'));
 });
 
 
 /**
  * Display login form
  */
-router.get('/login', (req, res) => {
-    res.render('watcher/login', {
-        title: 'Login | Watcher',
-        layout: 'watcher',
-        errors: req.session.errors,
-        successes: req.session.successes
-    });
-    req.session.errors = [];
-    req.session.successes = [];
-});
+// router.get('/login', (req, res) => {
+//     res.render('watcher/login', {
+//         title: 'Login | Watcher',
+//         layout: 'watcher',
+//         errors: req.session.errors,
+//         successes: req.session.successes
+//     });
+//     req.session.errors = [];
+//     req.session.successes = [];
+// });
 
 
 /**
@@ -317,6 +319,9 @@ function _handleRoute(req, res, next) {
 
     if(!req.session.successes) req.session.successes = [];
     if(!req.session.errors) req.session.errors = [];
+
+    next();
+    return;
 
     switch(origin) {
         case ROUTE.login:
