@@ -1,12 +1,7 @@
+@import url("https://fonts.googleapis.com/css?family=Slabo+27px|Heebo:800");
+* {
+    font-family: 'Heebo', sans-serif;
+}
+
 // Custom styling
 @import "custom/custom";
-
-// Bootstrap
-// @import '../../node_modules/bootstrap/scss/bootstrap';
-
-// FontAwesome
-$fa-font-path: '../../public/fonts/font-awesome/';
-// @import '../../node_modules/font-awesome/scss/font-awesome';
-
-// toastr
-// @import '../../node_modules/toastr/toastr';

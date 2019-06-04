@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
 
 import './Login.scss';
 
 class Login extends Component {
-    state = {
-        redirectToReferrer: false
-    }
-
     render() {
+        let {from} = this.props.location.state || {from: '/watcher/'};
+        let {redirectToReferrer} = this.props;
+
+        if(redirectToReferrer) return <Redirect to={from} />;
+
         return (
             <div id="login-con">
                 <div id="login-box">

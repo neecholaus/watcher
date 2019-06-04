@@ -8,73 +8,20 @@ import {
     withRouter
 } from 'react-router-dom';
 
+import GuardedRoute from './components/GuardedRoute/GuardedRoute';
 import Login from './components/Login/Login';
+import UploadImage from './components/UploadImage/UploadImage';
+import GenerateInvite from './components/GenerateInvite/GenerateInvite';
 
 import './Watcher.scss';
-import '../../../scss/Global.scss'; 
+import '../../../scss/Global.scss';
+import CaptureCanvas from './components/CaptureCanvas/CaptureCanvas';
 
-function AuthExample() {
-    return (
-      <Router>
-        <div>
-          <AuthButton />
-          <ul>
-            <li>
-              <Link to="/watcher/public">Public Page</Link>
-            </li>
-            <li>
-              <Link to="/watcher/protected">Protected Page</Link>
-            </li>
-          </ul>
-          <Route path="/watcher/public" component={Public} />
-          <Route path="/watcher/login" component={Login} />
-          <PrivateRoute path="/watcher/protected" component={Protected} />
-        </div>
-      </Router>
-    );
-}
-  
-const AuthButton = withRouter(({ history }) =>
-    fakeAuth.isAuthenticated ? (
-        <p>
-            Welcome!{" "}
-            <button
-                onClick={() => {
-                    fakeAuth.signout(() => history.push("/watcher/"));
-                }}>
-                Sign out
-            </button>
-        </p>
-    ) : (
-        <p>You are not logged in.</p>
-    )
-);
-  
-function PrivateRoute({ component: Component, ...rest }) {
-    return (
-        <Route
-            {...rest}
-            render={props =>
-                fakeAuth.isAuthenticated ? (
-                <Component {...props} />
-                ) : (
-                <Redirect
-                    to={{
-                    pathname: "/watcher/login",
-                    state: { from: props.location }
-                    }}
-                />
-                )
-            }
-        />
-    );
-}
-
-const fakeAuth = {
+const auth = {
     isAuthenticated: false,
     authenticate(cb) {
       this.isAuthenticated = true;
-      setTimeout(cb, 100); // fake async
+      setTimeout(cb, 100);
     },
     signout(cb) {
       this.isAuthenticated = false;
@@ -85,34 +32,6 @@ const fakeAuth = {
 function Public() {
 return <h3>Public</h3>;
 }
-  
-function Protected() {
-return <h3>Protected</h3>;
-}
-  
-class Login2 extends Component {
-    state = { redirectToReferrer: false };
-  
-    login = () => {
-      fakeAuth.authenticate(() => {
-        this.setState({ redirectToReferrer: true });
-      });
-    };
-  
-    render() {
-      let { from } = this.props.location.state || { from: { pathname: "/watcher" } };
-      let { redirectToReferrer } = this.state;
-  
-      if (redirectToReferrer) return <Redirect to={from} />;
-  
-      return (
-        <div>
-          <p>You must log in to view the page at {from.pathname}</p>
-          <button onClick={this.login}>Log in</button>
-        </div>
-      );
-    }
-}
 
 class Watcher extends Component {
     state = {
@@ -120,10 +39,16 @@ class Watcher extends Component {
     }
 
     login = () => {
-        fakeAuth.authenticate(() => {
+        auth.authenticate(() => {
             this.setState({ redirectToReferrer: true });
         });
     };
+
+    logout = () => {
+        auth.signout(() => {
+            this.setState({ redirectToReferrer: false });
+        });
+    }
 
     render() {
         let from = {pathname: "/watcher/"};
@@ -132,27 +57,49 @@ class Watcher extends Component {
         return (
             <div>
                 <Router>
-                    {redirectToReferrer ? (
-                        <Redirect to={from} />
+                    
+                    {auth.isAuthenticated ? (
+                        <button
+                            className="btn btn-secondary"
+                            onClick={this.logout}>
+                            Log out
+                        </button>
                     ) : null}
-                    <AuthButton />
-                    <ul>
-                        <li>
-                            <Link to="/watcher/public">Public Page</Link>
-                        </li>
-                        <li>
-                            <Link to="/watcher/login">Login Page</Link>
-                        </li>
-                        <li>
-                            <Link to="/watcher/protected">Protected Page</Link>
-                        </li>
-                    </ul>
+
+                    <Link 
+                        to="/watcher/public"
+                        className="btn btn-primary">Public Page</Link>
+                    <Link
+                        to="/watcher/upload-image"
+                        className="btn btn-primary">Upload Image</Link>
+                    <Link
+                        to="/watcher/generate-invite"
+                        className="btn btn-primary">Generate Invite</Link>
+                    <Link 
+                        to="/watcher/capture-canvas"
+                        className="btn btn-primary">CaptureCanvas</Link>
+                    
                     <Route path="/watcher/public" component={Public} />
-                    <Route path="/watcher/login" render={() => (
+                    <Route path="/watcher/login" render={props => (
                         <Login
-                            login={this.login} />
+                            {...props}
+                            login={this.login}
+                            from={from}
+                            redirectToReferrer={redirectToReferrer} />
                     )} />
-                    <PrivateRoute path="/watcher/protected" component={Protected} />
+
+                    <GuardedRoute
+                        auth={auth}
+                        path="/watcher/upload-image"
+                        component={UploadImage} />
+                    <GuardedRoute
+                        auth={auth}
+                        path="/watcher/generate-invite"
+                        component={GenerateInvite} />
+                    <GuardedRoute
+                        auth={auth}
+                        path="/watcher/capture-canvas"
+                        component={CaptureCanvas} />
                 </Router>
             </div>
         )

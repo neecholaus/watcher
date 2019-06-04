@@ -197,17 +197,17 @@ router.post('/register', (req, res) => {
 /**
  * Admin route for generating invite links
  */
-router.get('/generate-invite', (req, res) => {
-    res.render('watcher/admin/generate-invite', {
-        title: 'Send Invite',
-        user: req.session.user,
-        layout: 'watcher',
-        errors: req.session.errors,
-        successes: req.session.successes
-    });
-    req.session.errors = [];
-    req.session.successes = [];
-});
+// router.get('/generate-invite', (req, res) => {
+//     res.render('watcher/admin/generate-invite', {
+//         title: 'Send Invite',
+//         user: req.session.user,
+//         layout: 'watcher',
+//         errors: req.session.errors,
+//         successes: req.session.successes
+//     });
+//     req.session.errors = [];
+//     req.session.successes = [];
+// });
 
 
 /**
@@ -271,7 +271,7 @@ router.post('/upload', upload.any(), (req, res, next) => {
 /**
  * API route for fetching the most recent image
  */
-router.get('/most-recent', (req, res) => {
+router.post('/most-recent', (req, res) => {
     Capture.findOne().sort({taken_at: -1})
         .then((result) => {
             res.status(200);
@@ -285,7 +285,8 @@ router.get('/most-recent', (req, res) => {
 });
 
 
-router.get('/times', (req, res) => {
+router.post('/times', (req, res) => {
+    console.log('time request');
     Capture.find().select({taken_at:1, filename:1, _id:0}).sort({taken_at: -1})
         .then((result) => {
             res.status(200);
