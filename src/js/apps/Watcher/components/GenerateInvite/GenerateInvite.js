@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import './GenerateInvite.scss';
+
 class GenerateInvite extends Component {
     state = {
         token: null
@@ -37,31 +39,31 @@ class GenerateInvite extends Component {
         let generateIcon = 'fa fa-refresh';
 
         return (
-            <div>
-                <div className="raised-card">
-                    <h5 className="mt-2 mb-4">Generate invite link</h5>
+            <div id="container">
+                <div id="content">
+                <h3 className="mt-20 mb-10">Generate invite link</h3>
 
-                    {this.state.token ? (
-                        <div className="bg-light p-2 mb-4 text-muted rounded">
-                            <p className="m-0">https://nickneuman.co/watcher/register?token=<span className="text-success font-weight-bold">{this.state.token}</span></p>
-                        </div>
-                    ) : null}
+                {this.state.token ? (
+                    <div className="bg-light p-20 mb-10 text-muted rounded">
+                        <p className="m-0">https://nickneuman.co/watcher/register?token=<span className="text-success bold">{this.state.token}</span></p>
+                    </div>
+                ) : null}
 
+                <button 
+                    type="button"
+                    className="btn btn-primary mr-10"
+                    onClick={this.fetchToken}>
+                    <i className={generateIcon}></i> { this.state.token ? 'New' : 'Generate' }
+                </button>
+
+                {this.state.token ? (
                     <button 
                         type="button"
                         className="btn btn-primary"
-                        onClick={this.fetchToken}>
-                        <i className={generateIcon}></i> { this.state.token ? 'New' : 'Generate' }
+                        onClick={this.copyLink}>
+                        <i className="fa fa-clipboard"></i> Copy
                     </button>
-
-                    {this.state.token ? (
-                        <button 
-                            type="button"
-                            className="btn btn-primary"
-                            onClick={this.copyLink}>
-                            <i className="fa fa-clipboard"></i> Copy
-                        </button>
-                    ) : null}
+                ) : null}
                 </div>
             </div>
         );

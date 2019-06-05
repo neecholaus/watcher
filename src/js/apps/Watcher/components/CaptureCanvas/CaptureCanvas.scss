@@ -1,0 +1,31 @@
+#row {
+    @media(min-width: 650px) {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+
+        #left-con {
+            width: 35%;
+            max-width: 300px;
+        }
+
+        #right-con {
+            width: 75%;
+            max-width: 800px;
+        }
+    }
+
+    @media(max-width: 649px) {
+        display: block;
+
+        #left-con, #right-con {
+            width: 100%;
+        }
+    }
+
+    .column {
+        padding: 10px;
+        border: solid 1px #e3e3e3;
+        margin: 10px;
+    }
+}

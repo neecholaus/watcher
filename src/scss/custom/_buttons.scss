@@ -25,55 +25,45 @@ button {
     }
 }
 
+@mixin button($color, $resting, $hover) {
+    background: $resting;
+    color: $color;
+    &:hover {
+        background: $hover;
+    }
+}
+
 .btn {
-    border: none;
     padding: 10px 30px;
     font-size: 16px;
-    font-family: 'Lato', sans-serif;
-    border-radius: 3em;
+    font-family: 'Heebo', sans-serif;
     transition: all ease 0.3s;
+    text-decoration: none;
+
+    &:not(.outline) {
+        border: none;
+        border-radius: 3em;
+    }
+
+    &.btn-primary {
+        @include button(white, $primary, $primary-hover);
+    }
+
+    &.btn-success {
+        @include button(white, $success, $success-hover);
+    }
+
+    &.btn-danger {
+        @include button(white, $danger, $danger-hover);
+    }
+
+    &.btn-light {
+        @include button(black, $light, $light-hover);
+    }
 
     &.btn-sm {
         padding: 9px 18px;
         font-size: 14px;
-    }
-
-    &.btn-primary {
-        background: #4a5aef;
-        color: white;
-        &:hover {
-            background: #3f4bbf;
-        }
-    }
-
-    &.btn-light-outline {
-        font-size: 14px;
-        color: #a3a3a3;
-        background: transparent;
-        border: none;
-        transition: all ease 0.3s;
-        padding: 9px 18px;
-        border: solid 1px #e3e3e3;
-        border-radius: 3em;
-        margin: 1px 5px;
-
-        &:hover {
-            color: #686868;
-            border-color: #a3a3a3;
-            transition: 0s;
-        }
-    }
-
-    &.btn-transparent {
-        background: rgba(255,255,255,0.3);
-        color: white;
-        font-weight: 900;
-        border: none;
-
-        &:hover {
-            background: rgba(255,255,255,0.5);
-            color: white;
-        }
     }
 
     &:focus {

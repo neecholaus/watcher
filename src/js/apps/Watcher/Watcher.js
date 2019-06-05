@@ -66,9 +66,6 @@ class Watcher extends Component {
                         </button>
                     ) : null}
 
-                    <Link 
-                        to="/watcher/public"
-                        className="btn btn-primary">Public Page</Link>
                     <Link
                         to="/watcher/upload-image"
                         className="btn btn-primary">Upload Image</Link>
@@ -77,9 +74,8 @@ class Watcher extends Component {
                         className="btn btn-primary">Generate Invite</Link>
                     <Link 
                         to="/watcher/capture-canvas"
-                        className="btn btn-primary">CaptureCanvas</Link>
+                        className="btn btn-primary">Capture Canvas</Link>
                     
-                    <Route path="/watcher/public" component={Public} />
                     <Route path="/watcher/login" render={props => (
                         <Login
                             {...props}

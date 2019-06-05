@@ -1,12 +1,23 @@
+$primary:       #357df2;
+$primary-hover: #2b6dd8;
+
+$success:       #45bc6f;
+$success-hover: #3cad64;
+
+$danger:        #ed5547;
+$danger-hover:  #ce493d;
+
+$light:         #d3d3d3;
+$light-hover:   #bcbcbc;
+
 @import 'buttons';
 @import 'fonts';
 @import 'global-helpers';
+@import 'images';
 @import 'inputs';
 @import 'margin';
 @import 'navbar';
 @import 'padding';
-
-$primary: #0065b3;
 
 nav {
     &.navbar:not(.no-back) {
