@@ -10,6 +10,9 @@ Homestead.yaml
 /data/*
 /uploads/*
 
+# Bundled files
+/public/js/*
+
 # Miscellaneous
 .idea/*
 /public/hot
