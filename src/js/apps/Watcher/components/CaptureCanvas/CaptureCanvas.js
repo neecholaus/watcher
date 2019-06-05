@@ -14,13 +14,13 @@ class CaptureCanvas extends Component {
         fetch('/watcher/most-recent', {method:'POST'})
             .then(res => res.json())
             .then(res => {
-                this.currentCaptureSrc = '/watcher/capture/' + res.filename;
-                this.currentCapture = res;
-                this.currentCapture.taken_at = this.formatDate(this.currentCapture.taken_at);
+                this.state.currentCaptureSrc = '/watcher/capture/' + res.filename;
+                this.state.currentCapture = res;
+                this.state.currentCapture.taken_at = this.formatDate(this.state.currentCapture.taken_at);
             })
             .catch(() => {
-            this.currentCaptureSrc = null;
-            this.currentCapture = null;
+            this.state.currentCaptureSrc = null;
+            this.state.currentCapture = null;
         });
     }
 
@@ -50,8 +50,7 @@ class CaptureCanvas extends Component {
             fetch('/watcher/times', {method:'POST'})
                 .then(res => res.json())
                 .then(res => {
-                    console.log(this.state);
-                    this.setState({times: [...this.state.times, ...res]})
+                    this.setState({times: [...res]})
                 })
                 .catch(err => {
                     console.log(err);
@@ -60,13 +59,13 @@ class CaptureCanvas extends Component {
     }
 
     setSpecificCapture = e => {
-        e.persist();
-
         this.setState({specificCaptureSrc: '/watcher/capture/' + e.target.value});
     }
 
     componentDidMount = () => {
         let self = this;
+
+        console.log(this.state);
 
         // Get times for selector
         this.fetchTimes();
@@ -93,62 +92,56 @@ class CaptureCanvas extends Component {
     render() {
         return (
             <div className="mt-3">
-                <div className="raised-card">
-                    <h5 className="font heebo">Find a moment</h5>
-                    <button type="button" onClick={this.test}>test</button>
-                    <select className="form-control"
-                            name="time"
-                            onChange={this.setSpecificCapture}>
-                        <option defaultValue disabled value="default">Please Select a Time:</option>
-                        {this.state.times.map(time => (
-                            <option 
-                                key={time.filename}
-                                value={time.filename}>
-                                {this.formatDate(time.taken_at)}
-                            </option>
-                        ))}
-                    </select>
-                    <hr/>
-                    <div className="text-right">
-                        <button 
-                            className="btn btn-outline-dark"
-                            onClick={this.fetchTimes}>
-                            <i className="fa fa-refresh"
-                            className={!this.state.times ? 'fa-spin' : '' }></i>
-                        </button>
-                        <button 
-                            className="btn btn-outline-dark"
-                            onClick={this.state.specificCaptureSrc = null}>
-                            <i className="fa fa-circle text-danger"></i> Live
-                        </button>
-                    </div>
+                <h5 className="font heebo">Find a moment</h5>
+                <p>{this.state.specificCaptureSrc}</p>
+                <button type="button" onClick={this.test}>test</button>
+                <select 
+                    className="form-control"
+                    name="time"
+                    onChange={this.setSpecificCapture}>
+                    <option defaultValue disabled value="default">Please Select a Time:</option>
+                    {this.state.times.map(time => (
+                        <option 
+                            key={time.filename}
+                            value={time.filename}>
+                            {this.formatDate(time.taken_at)}
+                        </option>
+                    ))}
+                </select>
+                <hr/>
+                <div className="text-right">
+                    <button 
+                        className="btn btn-outline-dark"
+                        onClick={this.fetchTimes}>
+                        Reload
+                    </button>
+                    <button 
+                        className="btn btn-outline-dark">
+                        {/* onClick={this.state.specificCaptureSrc = null}> */}
+                        <i className="fa fa-circle text-danger"></i> Live
+                    </button>
                 </div>
-                <div className="col-md-8 mt-3">
-                    <div className="raised-card">
-                        {this.state.specificCaptureSrc ? (
-                                <img 
-                                    src={this.state.specificCaptureSrc}
-                                    className="img-fluid" 
-                                    alt="Specific Moment" />
-                        ) : this.state.currentCaptureSrc && this.state.currentCapture ? (
-                            <div>
-                                <p className="mb-0"><span className="text-muted">Taken:</span> <b>{this.state.currentCapture.taken_at}</b></p>
-                                <hr/>
-                                <div className="text-center">
-                                    <img 
-                                        src={this.state.currentCaptureSrc}
-                                        className="img-fluid" 
-                                        alt="Current Feed" />
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="text-center rounded mx-auto p-2 bg-warning text-dark">
-                                <h5 className="mb-0"><i className="fa fa-exclamation-triangle"></i> No images could be found.</h5>
-                            </div>
-                        )
-                        }
+                {this.state.specificCaptureSrc ? (
+                        <img 
+                            src={this.state.specificCaptureSrc}
+                            className="img-fluid" 
+                            alt="Specific Moment" />
+                ) : this.state.currentCaptureSrc && this.state.currentCapture ? (
+                    <div>
+                        <p className="mb-0"><span className="text-muted">Taken:</span> <b>{this.state.currentCapture.taken_at}</b></p>
+                        <hr/>
+                        <div className="text-center">
+                            <img 
+                                src={this.state.currentCaptureSrc}
+                                className="img-fluid" 
+                                alt="Current Feed" />
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <div className="text-center rounded mx-auto p-2 bg-warning text-dark">
+                        <h5 className="mb-0"><i className="fa fa-exclamation-triangle"></i> No images could be found.</h5>
+                    </div>
+                )}
             </div>
         );
     }

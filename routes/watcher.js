@@ -36,6 +36,16 @@ const ROUTE = {
 };
 
 
+// Routes included in react router
+const clientSideRouteList = [
+    '(/upload-image)',
+    '(/generate-invite)',
+    '(/capture-canvas)',
+    '(/login)'
+];
+const clientSideRoutes = new RegExp(`${clientSideRouteList.join('|')}`, 'g');
+
+
 /**
  * Middleware
  */
@@ -52,6 +62,7 @@ router.param('path', function(req, res, next, path) {
             res.status(500);
             res.end();
         } else {
+            console.log('image data', data);
             res.status(200);
             res.set('Content-Type', 'image/jpg');
             res.send(data);
@@ -64,35 +75,9 @@ router.param('path', function(req, res, next, path) {
 /**
  * Display dashboard
  */
-router.get(['/', '/*'], (req, res) => {
-    // res.render('watcher/index', {
-    //     title: 'Dashboard | Watcher',
-    //     layout: 'watcher',
-    //     user: req.session.user,
-    //     errors: req.session.errors,
-    //     successes: req.session.successes
-    // });
-    // req.session.errors = [];
-    // req.session.successes = [];
-
+router.get(['/', clientSideRoutes], (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../views/watcher.html'));
 });
-
-
-/**
- * Display login form
- */
-// router.get('/login', (req, res) => {
-//     res.render('watcher/login', {
-//         title: 'Login | Watcher',
-//         layout: 'watcher',
-//         errors: req.session.errors,
-//         successes: req.session.successes
-//     });
-//     req.session.errors = [];
-//     req.session.successes = [];
-// });
-
 
 /**
  * Handle login submission
@@ -112,7 +97,6 @@ router.post('/login', (req, res) => {
         }
     });
 });
-
 
 /**
  * Handle logout
@@ -195,22 +179,6 @@ router.post('/register', (req, res) => {
 
 
 /**
- * Admin route for generating invite links
- */
-// router.get('/generate-invite', (req, res) => {
-//     res.render('watcher/admin/generate-invite', {
-//         title: 'Send Invite',
-//         user: req.session.user,
-//         layout: 'watcher',
-//         errors: req.session.errors,
-//         successes: req.session.successes
-//     });
-//     req.session.errors = [];
-//     req.session.successes = [];
-// });
-
-
-/**
  * Admin route for generating new token
  */
 router.post('/gen-token', (req, res) => {
@@ -286,7 +254,6 @@ router.post('/most-recent', (req, res) => {
 
 
 router.post('/times', (req, res) => {
-    console.log('time request');
     Capture.find().select({taken_at:1, filename:1, _id:0}).sort({taken_at: -1})
         .then((result) => {
             res.status(200);
