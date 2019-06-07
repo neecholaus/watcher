@@ -28,10 +28,6 @@ const auth = {
       setTimeout(cb, 100);
     }
 };
-  
-function Public() {
-return <h3>Public</h3>;
-}
 
 class Watcher extends Component {
     state = {
@@ -46,8 +42,27 @@ class Watcher extends Component {
 
     logout = () => {
         auth.signout(() => {
+            fetch('/watcher/logout', {method:'POST'});
             this.setState({ redirectToReferrer: false });
+            window.sessionStorage.removeItem('token');
         });
+    }
+
+    componentWillMount = () => {
+        const ls = window.sessionStorage;
+        const token = ls.token;
+
+        fetch(`/watcher/verify-token/${token}`)
+            .then(res => res.json())
+            .then(res => {
+                if(res.valid) {
+                    ls.setItem('token', res.token);
+                    this.login();
+                } else {
+                    ls.removeItem('token');
+                    this.logout();
+                }
+            });
     }
 
     render() {

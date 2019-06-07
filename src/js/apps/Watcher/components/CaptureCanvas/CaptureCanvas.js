@@ -67,8 +67,6 @@ class CaptureCanvas extends Component {
     componentDidMount = () => {
         let self = this;
 
-        console.log(this.state);
-
         // Get times for selector
         this.fetchTimes();
 

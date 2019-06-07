@@ -5,13 +5,17 @@ const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const rToken = require('rand-token');
 
 
 // MongoDB Config
 let mongoUser = process.env.MONGO_USER;
 let mongoPass = process.env.MONGO_PASS;
 let authUrl = `mongodb://${mongoUser}:${mongoPass}@localhost:27017/watcher?authSource=admin`;
-mongoose.connect(authUrl, {useNewUrlParser: true}, function(err) {
+mongoose.connect(authUrl, {
+    useNewUrlParser: true,
+    useCreateIndex: true
+}, function(err) {
     if(err) throw err;
 });
 
@@ -30,11 +34,34 @@ const ROUTE = {
     logout: '/watcher/logout',
     gen_invite: '/watcher/generate-invite',
     gen_token: '/wathcer/gen-token',
-    upload_api: '/watcher/upload',
+    upload: '/watcher/upload',
+    upload_api: '/watcher/api-upload',
     recent_capture: '/watcher/most-recent',
+    times: '/watcher/times',
     capture: '/watcher/capture'
 };
 
+/**
+ * Image path parameter, returns an image if path is valid.
+ */
+router.param('path', function(req, res, next, path) {
+    fs.readFile(__dirname + '/../uploads/' + path, function(err, data) {
+        if(err) {
+            res.status(500);
+            res.end();
+        } else {
+            res.status(200);
+            res.set('Content-Type', 'image/jpg');
+            res.send(data);
+            res.end();
+        }
+    });
+});
+
+/**
+ * Primary auth middleware.
+ */
+router.use(_handleRoute);
 
 // Routes included in react router
 const clientSideRouteList = [
@@ -45,39 +72,36 @@ const clientSideRouteList = [
 ];
 const clientSideRoutes = new RegExp(`${clientSideRouteList.join('|')}`, 'g');
 
-
 /**
- * Middleware
- */
-router.use(_handleRoute);
-
-
-/**
- * Image path middleware
- */
-router.param('path', function(req, res, next, path) {
-    fs.readFile(__dirname + '/../uploads/' + path, function(err, data) {
-        if(err) {
-            console.log(err);
-            res.status(500);
-            res.end();
-        } else {
-            console.log('image data', data);
-            res.status(200);
-            res.set('Content-Type', 'image/jpg');
-            res.send(data);
-            res.end();
-        }
-    });
-});
-
-
-/**
- * Display dashboard
+ * Sends react app.
  */
 router.get(['/', clientSideRoutes], (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../views/watcher.html'));
 });
+
+/**
+ * Verifies that passed token is valid, generates new if so and returns it.
+ */
+router.param('token', function(req, res, next, token) {
+    let newToken = rToken.generate(25);
+    User.findOneAndUpdate({token}, {token:newToken}, (err, data) => {
+        if(data) {
+            req.session.user = data;
+            res.json({
+                valid: true,
+                token: newToken
+            });
+            res.end();
+        }
+        else next();
+    });
+});
+router.get('/verify-token/:token', (req, res) => {
+    res.json({
+        valid: false
+    });
+    res.end();
+})
 
 /**
  * Handle login submission
@@ -89,11 +113,29 @@ router.post('/login', (req, res) => {
         let passwordMatch = data ? bcrypt.compareSync(req.body.password, data.password): false;
         if(data && passwordMatch) {
             req.session.user = data;
-            res.redirect('/watcher');
+            res.json({
+                success: true,
+                token: data.token
+            });
+            res.end();
         } else {
-            if(!data) req.session.errors.push('Email is not tied to an account');
-            if(!passwordMatch) req.session.errors.push('Password is incorrect');
-            res.redirect('/watcher/login');
+            if(!data) {
+                res.json({
+                    success: false,
+                    message: 'Email is not tied to an account'
+                });
+                res.end();
+                return;
+            }
+
+            if(!passwordMatch) {
+                res.json({
+                    success: false,
+                    message: 'Password is incorrect'
+                });
+                res.end();
+                return;
+            }
         }
     });
 });
@@ -101,10 +143,8 @@ router.post('/login', (req, res) => {
 /**
  * Handle logout
  */
-router.get('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
     req.session.user = null;
-
-    res.redirect('/watcher/login');
     return;
 });
 
@@ -228,9 +268,16 @@ const upload = multer({storage: storage});
 
 
 /**
+ * Admin test upload
+ */
+router.post('/upload', upload.any(), (req, res) => {
+    res.redirect('/watcher/capture-canvas');
+});
+
+/**
  * API route for uploading image
  */
-router.post('/upload', upload.any(), (req, res, next) => {
+router.post('/api-upload', upload.any(), (req, res) => {
     req.session.successes.push('Image has been uploaded.');
     res.redirect('/watcher/upload-image');
 });
@@ -285,19 +332,7 @@ function _handleRoute(req, res, next) {
     // Removes trailing forward slashes
     let origin = req.originalUrl.replace(/\/+(?=$|\s)/g, '').split('?')[0];
 
-    if(!req.session.successes) req.session.successes = [];
-    if(!req.session.errors) req.session.errors = [];
-
-    next();
-    return;
-
     switch(origin) {
-        case ROUTE.login:
-            if(req.session.user) {
-                res.redirect('/watcher');
-                return false;
-            }
-            break;
         case ROUTE.register:
             if(req.session.user) {
                 res.redirect('/watcher');
@@ -314,6 +349,24 @@ function _handleRoute(req, res, next) {
             if(!req.session.user || !req.session.user.admin) {
                 res.redirect('/watcher/login');
                 return false;
+            }
+            break;
+        case ROUTE.upload:
+            if(!req.session.user || !req.session.user.admin) {
+                res.redirect('/watcher/login');
+                return false;
+            }
+            break;
+        case ROUTE.recent_capture:
+            if(!req.session.user) {
+                res.status(401);
+                res.end();
+            }
+            break;
+        case ROUTE.times:
+            if(!req.session.user) {
+                res.status(401);
+                res.end();
             }
             break;
         case ROUTE.upload_api:
@@ -336,11 +389,6 @@ function _handleRoute(req, res, next) {
             }
 
             break;
-        default:
-            if(!req.session.user) {
-                res.redirect('/watcher/login');
-                return false;
-            }
     }
 
     next();

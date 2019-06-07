@@ -6,6 +6,7 @@ const userSchema = mongoose.Schema({
     name: String,
     email: {type: String, unique: true},
     password: String,
+    token: String,
     created_at: {type: Date, default: Date.now}
 });
 
