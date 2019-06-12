@@ -45,34 +45,31 @@ class Login extends Component {
         return (
             <div id="login-con">
                 <div id="login-box">
-                    <h3 className="mt-2 mb-4 font heebo">Login</h3>
-                    <form action="/watcher/login" method="POST">
-                        <input 
-                            type="text"
-                            placeholder="Email"
-                            name="email"
-                            autoComplete="off"
-                            onChange={this.onChange}
-                            value={this.state.email}
-                            required />
-                        <input 
-                            type="password"
-                            className="mt-20"
-                            placeholder="Password"
-                            name="password"
-                            onChange={this.onChange}
-                            value={this.state.password}
-                            required />
-                        <div className="text-right">
-                            <button type="button"
-                                    className="btn btn-primary mt-3 slide-icon"
-                                    onClick={this.checkCredentials}>
-                                <i className="fa fa-sign-in"></i> Login
-                            </button>
-                        </div>
-                    </form>
+                    <h1 className="font heebo mt-0">Login</h1>
+                    <input 
+                        type="text"
+                        placeholder="Email"
+                        name="email"
+                        autoComplete="off"
+                        onChange={this.onChange}
+                        value={this.state.email}
+                        required />
+                    <input 
+                        type="password"
+                        className="mt-20"
+                        placeholder="Password"
+                        name="password"
+                        onChange={this.onChange}
+                        value={this.state.password}
+                        required />
+                    <div className="text-right">
+                        <button type="button"
+                                className="btn btn-primary mt-30"
+                                onClick={this.checkCredentials}>
+                            <i className="fa fa-sign-in"></i> Login
+                        </button>
+                    </div>
                 </div>
-                <div className="login-filler"></div>
             </div>
         )
     }

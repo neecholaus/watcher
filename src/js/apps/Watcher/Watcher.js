@@ -70,26 +70,26 @@ class Watcher extends Component {
         let { redirectToReferrer } = this.state;
 
         return (
-            <div>
+            <div id="watcher">
                 <Router>
                     
-                    {auth.isAuthenticated ? (
-                        <button
-                            className="btn btn-secondary"
-                            onClick={this.logout}>
-                            Log out
-                        </button>
-                    ) : null}
+                    <div id="navbar">
+                        {auth.isAuthenticated ? (
+                            <button className="nav-link" onClick={this.logout}>
+                                Log out
+                            </button>
+                        ) : null}
 
-                    <Link
-                        to="/watcher/upload-image"
-                        className="btn btn-primary">Upload Image</Link>
-                    <Link
-                        to="/watcher/generate-invite"
-                        className="btn btn-primary">Generate Invite</Link>
-                    <Link 
-                        to="/watcher/capture-canvas"
-                        className="btn btn-primary">Capture Canvas</Link>
+                        <Link
+                            to="/watcher/upload-image"
+                            className="nav-link">Upload Image</Link>
+                        <Link
+                            to="/watcher/generate-invite"
+                            className="nav-link">Generate Invite</Link>
+                        <Link 
+                            to="/watcher/capture-canvas"
+                            className="nav-link">Capture Canvas</Link>
+                    </div>
                     
                     <Route path="/watcher/login" render={props => (
                         <Login

@@ -18,19 +18,3 @@ $light-hover:   #bcbcbc;
 @import 'margin';
 @import 'navbar';
 @import 'padding';
-
-nav {
-    &.navbar:not(.no-back) {
-        background-image: url('/public/images/navbar-back.jpg') !important;
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-    }
-}
-
-.raised-card {
-    padding: 16px;
-    border-radius: 0px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-    background: white;
-}

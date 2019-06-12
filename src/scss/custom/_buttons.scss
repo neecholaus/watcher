@@ -70,3 +70,18 @@ button {
         outline: none;
     }
 }
+
+#navbar {
+    box-sizing: border-box;
+    .nav-link {
+        border-radius: 0;
+        border: solid 1px #d3d3d3;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 2px;
+        margin: 0 5px;
+        font-size: 14px;
+        color: #939393;
+        box-sizing: border-box;
+    }
+}
