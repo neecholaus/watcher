@@ -1,12 +1,36 @@
+@import "../../../scss/Global.scss";
+
 #watcher {
     margin: 0;
     padding: 0;
 }
 
 #navbar {
-    // height: 50px;
+    height: 51px;
     background: #f3f3f3;
     border-bottom: solid 1px #d3d3d3;
-    padding-top: 10px;
-    // box-sizing: border-box;
+    padding: 10px;
+    box-sizing: border-box;
+    
+    .nav-link {
+        cursor: pointer;
+        border-radius: 0;
+        border: solid 1px $primary;
+        text-decoration: none;
+        border-radius: 2px;
+        margin: 0 5px;  
+        font-size: 14px;
+        line-height: 16px;
+        color: #737373;
+        padding: 6px 20px;
+        box-sizing: border-box;
+        display: inline-block;
+        background: white;
+
+        &:hover {
+            border-color: $primary-hover;
+            background: $primary-light;
+            color: black;
+        }
+    }
 }

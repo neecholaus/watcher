@@ -45,7 +45,7 @@ class Login extends Component {
         return (
             <div id="login-con">
                 <div id="login-box">
-                    <h1 className="font heebo mt-0">Login</h1>
+                    <h2>Login</h2>
                     <input 
                         type="text"
                         placeholder="Email"
@@ -64,7 +64,7 @@ class Login extends Component {
                         required />
                     <div className="text-right">
                         <button type="button"
-                                className="btn btn-primary mt-30"
+                                className="btn btn-utility mt-30"
                                 onClick={this.checkCredentials}>
                             <i className="fa fa-sign-in"></i> Login
                         </button>

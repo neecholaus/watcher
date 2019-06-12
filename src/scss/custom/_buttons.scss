@@ -1,64 +1,31 @@
-button {
-    cursor: pointer !important;
+@mixin button($resting, $hover, $light) {
+    border: solid 1px $resting;
+    background: white;
+    color: #737373;
 
-    &:focus {
-        outline: none;
-    }
-
-    &.slide-icon {
-        i {
-            margin-left: -10px;
-            color: transparent;
-            margin-right: -8px;
-            transition: all ease 0.3s;
-        }
-
-        &:hover {
-            i {
-                margin-left: inherit;
-                color: inherit;
-                opacity: 1;
-                margin-right: 10px;
-                transition: all ease 0.3s;
-            }
-        }
-    }
-}
-
-@mixin button($color, $resting, $hover) {
-    background: $resting;
-    color: $color;
     &:hover {
-        background: $hover;
+        border-color: $hover;
+        background-color: $light;
+        color: black;
     }
 }
 
 .btn {
-    padding: 10px 30px;
-    font-size: 16px;
-    font-family: 'Heebo', sans-serif;
-    transition: all ease 0.3s;
+    border-radius: 2px;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 6px 20px;
     text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: inline-block;
 
-    &:not(.outline) {
-        border: none;
-        border-radius: 3em;
+    &.btn-utility {
+        @include button($primary, $primary-hover, $primary-light);
     }
 
     &.btn-primary {
-        @include button(white, $primary, $primary-hover);
-    }
-
-    &.btn-success {
-        @include button(white, $success, $success-hover);
-    }
-
-    &.btn-danger {
-        @include button(white, $danger, $danger-hover);
-    }
-
-    &.btn-light {
-        @include button(black, $light, $light-hover);
+        @include button($primary, $primary-hover, $primary-light);
     }
 
     &.btn-sm {
@@ -68,20 +35,5 @@ button {
 
     &:focus {
         outline: none;
-    }
-}
-
-#navbar {
-    box-sizing: border-box;
-    .nav-link {
-        border-radius: 0;
-        border: solid 1px #d3d3d3;
-        padding: 10px 20px;
-        text-decoration: none;
-        border-radius: 2px;
-        margin: 0 5px;
-        font-size: 14px;
-        color: #939393;
-        box-sizing: border-box;
     }
 }

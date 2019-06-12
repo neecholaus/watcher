@@ -14,7 +14,6 @@ import UploadImage from './components/UploadImage/UploadImage';
 import GenerateInvite from './components/GenerateInvite/GenerateInvite';
 
 import './Watcher.scss';
-import '../../../scss/Global.scss';
 import CaptureCanvas from './components/CaptureCanvas/CaptureCanvas';
 
 const auth = {
@@ -75,9 +74,9 @@ class Watcher extends Component {
                     
                     <div id="navbar">
                         {auth.isAuthenticated ? (
-                            <button className="nav-link" onClick={this.logout}>
+                            <a className="nav-link" onClick={this.logout}>
                                 Log out
-                            </button>
+                            </a>
                         ) : null}
 
                         <Link

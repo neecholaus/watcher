@@ -14,7 +14,6 @@
     "license": "MIT",
     "homepage": "https://bitbucket.org/father_nicolai/portfolio#readme",
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.9.0",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.18.3",
         "dotenv": "^6.2.0",
