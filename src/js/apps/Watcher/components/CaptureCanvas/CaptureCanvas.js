@@ -84,30 +84,30 @@ class CaptureCanvas extends Component {
             <div className="mt-3" id="row">
                 <div id="left-con">
                     <div className="column">
-                    <p>Find a moment</p>
-                    <select 
-                        name="time"
-                        onChange={this.setSpecificCapture}>
-                        <option defaultValue disabled value="default">Please Select a Time:</option>
-                        {this.state.times.map(time => (
-                            <option 
-                                key={time.filename}
-                                value={time.filename}>
-                                {this.formatDate(time.taken_at)}
-                            </option>
-                        ))}
-                    </select>
-                    <hr/>
-                    <button 
-                        className="btn btn-light mr-10"
-                        onClick={this.fetchTimes}>
-                        Reload
-                    </button>
-                    <button 
-                        className="btn btn-light"
-                        onClick={() => {this.setState({specificCaptureSrc: null})}}>
-                        Live
-                    </button>
+                        <h3>Find a moment</h3>
+                        <select 
+                            name="time"
+                            onChange={this.setSpecificCapture}>
+                            <option defaultValue value="default">Please Select a Time:</option>
+                            {this.state.times.map(time => (
+                                <option 
+                                    key={time.filename}
+                                    value={time.filename}>
+                                    {this.formatDate(time.taken_at)}
+                                </option>
+                            ))}
+                        </select>
+                        <hr/>
+                        <button 
+                            className="btn btn-primary mr-10"
+                            onClick={this.fetchTimes}>
+                            Reload
+                        </button>
+                        <button 
+                            className="btn btn-primary"
+                            onClick={() => {this.setState({specificCaptureSrc: null})}}>
+                            Live
+                        </button>
                     </div>
                 </div>
                 <div id="right-con">
@@ -130,7 +130,7 @@ class CaptureCanvas extends Component {
                             </div>
                         ) : (
                             <div className="text-center rounded mx-auto p-2 bg-warning text-dark">
-                                <h5 className="mb-0"><i className="fa fa-exclamation-triangle"></i> No images could be found.</h5>
+                                <h3 className="mb-0">No images could be found.</h3>
                             </div>
                         )}
                     </div>
