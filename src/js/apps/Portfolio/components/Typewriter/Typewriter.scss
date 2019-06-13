@@ -10,18 +10,18 @@
         position: absolute;
         top: 0;
         height: 80%;
-        right: 0;
+        right: -5px;
     }
 
     @keyframes blink {
         0% {
-            background: rgba(255,255,255,0);
+            background: rgba(0,0,0,0);
         }
         50% {
-            background: rgba(255,255,255,1);
+            background: rgba(0,0,0,1);
         }
         100% {
-            background: rgba(255,255,255,1)
+            background: rgba(0,0,0,1)
         }
     }
 }
