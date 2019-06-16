@@ -89,6 +89,14 @@ class Watcher extends Component {
                             to="/watcher/capture-canvas"
                             className="nav-link">Capture Canvas</Link>
                     </div>
+
+                    <Route exact path="/watcher/" render={() => (
+                        auth.isAuthenticated ? (
+                            <Redirect to="/watcher/capture-canvas" />
+                        ) : (
+                            <Redirect to="/watcher/login" />
+                        )
+                    )} />
                     
                     <Route path="/watcher/login" render={props => (
                         <Login
