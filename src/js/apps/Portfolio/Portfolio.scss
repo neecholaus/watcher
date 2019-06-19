@@ -1,5 +1,25 @@
-#site-header {
-    background: linear-gradient(45deg, #19b569, #19b5af);
+#header-con {
+    background: linear-gradient(45deg, #4d4f51, #616366);
     color: white;
-    padding: 100px 10px 50px 10px;
+    padding: 30px 10px;
+    display: flex;
+    justify-content: center;
+
+    #header {
+        width: 100%;
+        max-width: 800px;
+    }
+}
+
+.btn.btn-primary {
+    background: #4286f4;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3em;
+
+    &:hover {
+        color: white;
+        background: #3166bc;
+    }
 }

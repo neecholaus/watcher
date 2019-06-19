@@ -58,13 +58,13 @@ class Typewriter extends Component {
 
         return (
             <div className="typewriter">
-                <h5 className="font heebo m-0">
+                <h3 className="font heebo m-0 mb-30">
                     { prefix }
                     <span id="phrase" style={styles}>
                         { this.state.currentLetters }
                         <span className="cursor"></span>
                     </span>
-                </h5>
+                </h3>
             </div>
         )
     }

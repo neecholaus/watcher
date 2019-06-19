@@ -17,11 +17,15 @@ class Portfolio extends Component {
     render() {
         return (
             <div>
-                <h1 className="font heebo mb-0">I'm Nick Neuman,</h1>
-                <Typewriter phrases={this.phrases} prefix='a ' />
-                <a href="/watcher"
-                    className="btn btn-primary">
-                    Watcher</a>
+                <div id="header-con">
+                    <div id="header">
+                        <h1 className="font heebo mb-0">I'm Nick Neuman,</h1>
+                        <Typewriter phrases={this.phrases} prefix='a ' />
+                        <a href="/watcher"
+                            className="btn btn-primary">
+                            Watcher</a>
+                    </div>
+                </div>
                 <h3 className="text-dark font heebo bold">About Me</h3>
                 <hr/>
                 <p>I am a self taught developer specialized in building applications using primarily PHP or NodeJS for server side logic. I specialize in many different technologies spanning the entire development cycle and because of this, I am capable of taking a concept and bringing it into a deployable product. To do this I frequently collaborate with multiple departments in order to bring a project to fruition.</p>            
