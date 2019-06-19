@@ -1,3 +1,7 @@
+body {
+    background: #efefef;
+}
+
 #header-con {
     background: linear-gradient(45deg, #4d4f51, #616366);
     color: white;
@@ -8,6 +12,38 @@
     #header {
         width: 100%;
         max-width: 800px;
+    }
+}
+
+#body-con {
+    padding: 30px 10px;
+    display: flex;
+    justify-content: center;
+
+    #body {
+        width: 100%;
+        max-width: 800px;
+
+        .section {
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: white;
+
+            p, li {
+                color: #767676;
+            }
+        }
+
+        hr {
+            width: 100%;
+            box-sizing: border-box;
+            background: #a3a3a3;
+            height: 1px;
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
     }
 }
 
