@@ -27,11 +27,19 @@ class Portfolio extends Component {
                             Watcher</a>
                     </div>
                 </div>
+                <div id="warning-banner">
+                        <p>I am currently writing some new content, this does not reflect all of my experience.</p>
+                    </div>
                 <div id="body-con">
                     <div id="body">
                         <div className="section">
                             <h2 className="text-dark font heebo">About Me</h2>
-                            <p>I am a self taught developer specialized in building applications using primarily PHP or NodeJS for server side logic. I specialize in many different technologies spanning the entire development cycle and because of this, I am capable of taking a concept and bringing it into a deployable product. To do this I frequently collaborate with multiple departments in order to bring a project to fruition.</p>            
+                            <p>I am a self taught developer specialized in building applications using primarily PHP or NodeJS for server side logic. I specialize in many different technologies spanning the entire development cycle and because of this, I am capable of taking a concept and bringing it into a deployable product. To do this I frequently collaborate with multiple departments in order to bring a project to fruition.</p>
+                            <p>
+                                <a href="https://github.com/neecholaus" target="_blank">Github</a>
+                                <span class="pl-10"></span>
+                                <a href="https://www.linkedin.com/in/nick-neuman-339569121/" target="_blank">LinkedIn</a>
+                            </p>
                         </div>
                         <div className="section">
                             <h2 className="font heebo">My Work</h2>
