@@ -66,7 +66,7 @@ class Portfolio extends Component {
                             </p>
                             <hr/>
                             <h3 className="mb-0">CSV to JSON Converter</h3>
-                            <p className="mt-0">This was a small piece of functionality I made for a coworker to that allowed him to increase his productivity. He was familiar with the terminal and wanted to use it more, so he requested a CLI. The overall process was not too difficult, but the outcome was quite helpful. Feel free to use or check it out <a href="https://github.com/neecholaus/csv-to-json-converter" target="_blank">here</a>. The overall process was not too difficult, but the outcome was quite useful.</p>
+                            <p className="mt-0">This was a small piece of functionality I made for a coworker to that allowed him to increase his productivity. He was familiar with the terminal and wanted to use it more, so he requested a CLI. The overall process was not too difficult, but the outcome was quite helpful. Feel free to use or check it out <a href="https://github.com/neecholaus/csv-to-json-converter" target="_blank">here</a>.</p>
                             <p>
                                 <a href="https://github.com/neecholaus/csv-to-json-converter" target="_blank" rel="noopener">
                                     <button type="button" className="btn btn-primary">View Code</button>
