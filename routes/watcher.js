@@ -277,9 +277,28 @@ router.post('/upload', upload.any(), (req, res) => {
 /**
  * API route for uploading image
  */
-router.post('/api-upload', upload.any(), (req, res) => {
-    req.session.successes.push('Image has been uploaded.');
-    res.redirect('/watcher/upload-image');
+router.post('/api-upload', (req, res) => {
+    const filename = Date.now().toString() + '.png';
+    let file = Buffer.from(req.body.file);
+    
+    fs.writeFileSync(`uploads/${filename}`, file);
+
+    new Capture({
+        _id: new mongoose.Types.ObjectId(),
+        path: `/uploads/${filename}`,
+        filename: filename,
+        taken_at: Date.now()
+    })
+        .save()
+        .then(result => {
+            console.log('Capture created.');
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
+        res.status(200);
+        res.end();
 });
 
 
@@ -371,18 +390,13 @@ function _handleRoute(req, res, next) {
             break;
         case ROUTE.upload_api:
             let token = req.headers['authorization'].split(' ').pop();
-
-            // Weird formatting but it's what Node's docs say
-            // because new Buffer is deprecated.
             let buffer1 = Buffer.from(token, 'base64');
-            let buffer2 = Buffer.from(buffer1);
-            let data = buffer2.toString().split(':');
+            let data = buffer1.toString().split(':');
 
             let apiUser = data[0];
             let apiPwd = data[1];
 
-            if(apiUser !== process.env.PI_USER
-                || apiPwd !== process.env.PI_PASS) {
+            if(apiUser !== process.env.PI_USER || apiPwd !== process.env.PI_PASS) {
                 res.status(403);
                 res.end();
                 return false;

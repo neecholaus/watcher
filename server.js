@@ -11,8 +11,8 @@ dotenv.config();
 let app = express();
 
 // Handle request bodies
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({limit:'100mb',extended: false}));
+app.use(bodyParser.json({limit:'100mb'}));
 
 // Serve static assets
 app.use('/public', express.static(path.join(__dirname, 'public')));
