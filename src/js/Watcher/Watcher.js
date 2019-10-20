@@ -71,7 +71,7 @@ class Watcher extends Component {
         return (
             <div id="watcher">
                 <Router>
-                    
+
                     <div id="navbar">
                         {auth.isAuthenticated ? (
                             <a className="nav-link" onClick={this.logout}>
@@ -85,7 +85,7 @@ class Watcher extends Component {
                         <Link
                             to="/watcher/generate-invite"
                             className="nav-link">Generate Invite</Link>
-                        <Link 
+                        <Link
                             to="/watcher/capture-canvas"
                             className="nav-link">Capture Canvas</Link>
                     </div>
@@ -97,7 +97,7 @@ class Watcher extends Component {
                             <Redirect to="/watcher/login" />
                         )
                     )} />
-                    
+
                     <Route path="/watcher/login" render={props => (
                         <Login
                             {...props}
@@ -123,6 +123,6 @@ class Watcher extends Component {
         )
     }
 }
-  
+
 
 ReactDOM.render(<Watcher />, document.getElementById('app'));

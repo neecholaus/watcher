@@ -17,23 +17,19 @@ app.use(bodyParser.json({limit:'100mb'}));
 // Serve static assets
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-// Allow sessions
+// allow sessions
 app.use(session({
-    secret: 'string',
+    secret: process.env.APP_SECRET,
     saveUninitialized: false,
     resave: false
 }));
 
-// Main page but redirect for now
+// main page
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/views/portfolio.html');
+    res.end('restructuring...');
 });
 
-// app.get('/watcher', (req, res) => {
-//     res.sendFile(__dirname + '/views/watcher.html');
-// });
-
-// Watcher
+// watcher
 let watcher = require('./routes/watcher');
 app.use('/watcher', watcher);
 

@@ -1,4 +1,4 @@
-@import "../../../scss/Global.scss";
+@import "../../scss/Global.scss";
 
 #watcher {
     margin: 0;
@@ -13,14 +13,14 @@
     border-bottom: solid 1px #d3d3d3;
     padding: 10px;
     box-sizing: border-box;
-    
+
     .nav-link {
         cursor: pointer;
         border-radius: 0;
         border: solid 1px $primary;
         text-decoration: none;
         border-radius: 2px;
-        margin: 0 5px;  
+        margin: 0 5px;
         font-size: 14px;
         line-height: 16px;
         color: #737373;

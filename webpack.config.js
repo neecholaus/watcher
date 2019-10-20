@@ -1,9 +1,6 @@
 module.exports = {
     mode: 'development',
-    entry: {
-        portfolio: './src/js/apps/Portfolio/Portfolio.js',
-        watcher: './src/js/apps/Watcher/Watcher.js'
-    },
+    entry: './src/js/Watcher/Watcher.js',
     output: {
         path: __dirname + "/public/js",
         filename: "[name].js"
@@ -25,7 +22,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.s?css$/, 
+                test: /\.s?css$/,
                 use: ['style-loader', 'css-loader', 'sass-loader']
             }
         ]
