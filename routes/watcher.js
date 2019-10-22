@@ -280,7 +280,7 @@ router.post('/upload', upload.any(), (req, res) => {
 router.post('/api-upload', (req, res) => {
     const filename = Date.now().toString() + '.png';
     let file = Buffer.from(req.body.file);
-    
+
     fs.writeFileSync(`uploads/${filename}`, file);
 
     new Capture({
