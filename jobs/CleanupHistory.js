@@ -8,7 +8,8 @@ let mongoPass = process.env.MONGO_PASS;
 let authUrl = `mongodb://${mongoUser}:${mongoPass}@localhost:27017/watcher?authSource=admin`;
 mongoose.connect(authUrl, {
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology: true
 }, function(err) {
     if(err) throw err;
 });
@@ -17,10 +18,14 @@ mongoose.connect(authUrl, {
 let cutoffTime = new Date();
 cutoffTime.setHours(cutoffTime.getHours() - 2);
 
-capture.find({taken_at: {$lt: cutoffTime}}, (err, data) => {
+capture.find({taken_at: {$lt: new Date(cutoffTime)}}, (err, data) => {
     if(err) {
         console.log(err);
+    } else if(data) {
+        data.forEach(capture => {
+            console.log(capture._id, capture.filename);
+        });
     }
 
-    console.log(data);
+    mongoose.disconnect();
 });

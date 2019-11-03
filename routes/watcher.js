@@ -14,7 +14,8 @@ let mongoPass = process.env.MONGO_PASS;
 let authUrl = `mongodb://${mongoUser}:${mongoPass}@localhost:27017/watcher?authSource=admin`;
 mongoose.connect(authUrl, {
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology: true
 }, function(err) {
     if(err) throw err;
 });
@@ -107,6 +108,7 @@ router.get('/verify-token/:token', (req, res) => {
  * Handle login submission
  */
 router.post('/login', (req, res) => {
+    console.log('attempting login');
     User.findOne({
         email: req.body.email
     }, (err, data) => {

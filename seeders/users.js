@@ -15,7 +15,11 @@ let adminUserPass = process.env.MONGO_ADMIN_USER_PASS;
 
 let authUrl = `mongodb://${mongoUser}:${mongoPass}@localhost:27017/watcher?authSource=admin`;
 
-mongoose.connect(authUrl, {useNewUrlParser: true}, function(err) {
+mongoose.connect(authUrl, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+}, function(err) {
     if(err) throw err;
 });
 
