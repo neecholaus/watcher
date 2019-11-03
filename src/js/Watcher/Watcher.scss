@@ -3,36 +3,34 @@
 #watcher {
     margin: 0;
     padding: 0;
-    background: #f3f3f3;
+    background: #414141;
     min-height: calc(100vh);
 }
 
 #navbar {
     height: 51px;
-    background: #f3f3f3;
-    border-bottom: solid 1px #d3d3d3;
+    background: #414141;
+    border-bottom: solid 1px #313131;
     padding: 10px;
     box-sizing: border-box;
 
     .nav-link {
         cursor: pointer;
-        border-radius: 0;
-        border: solid 1px $primary;
+        border: solid 1px $darkest;
+        background: $dark;
         text-decoration: none;
-        border-radius: 2px;
+        border-radius: 4px;
         margin: 0 5px;
         font-size: 14px;
         line-height: 16px;
-        color: #737373;
+        color: #939393;
         padding: 6px 20px;
         box-sizing: border-box;
         display: inline-block;
-        background: white;
 
         &:hover {
-            border-color: $primary-hover;
-            background: $primary-light;
-            color: black;
+            border-color: $darkest;
+            background: $dim;
         }
     }
 }

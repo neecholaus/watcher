@@ -67,7 +67,7 @@ class Login extends Component {
                         <button type="button"
                                 className="btn btn-utility mt-30"
                                 onClick={this.checkCredentials}>
-                            <i className="fa fa-sign-in"></i> Login
+                            Login
                         </button>
                     </div>
                 </div>

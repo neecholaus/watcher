@@ -3,7 +3,7 @@ module.exports = {
     entry: './src/js/Watcher/Watcher.js',
     output: {
         path: __dirname + "/public/js",
-        filename: "[name].js"
+        filename: "watcher.js"
     },
     module: {
         rules: [

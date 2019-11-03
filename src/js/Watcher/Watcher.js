@@ -47,14 +47,13 @@ class Watcher extends Component {
         });
     }
 
-    componentWillMount = () => {
+    UNSAFE_componentWillMount = () => {
         const ls = window.sessionStorage;
         const token = ls.token;
 
         fetch(`/watcher/verify-token/${token}`)
             .then(res => res.json())
             .then(res => {
-                console.log(res);
                 if(res.valid) {
                     ls.setItem('token', res.token);
                     this.login();

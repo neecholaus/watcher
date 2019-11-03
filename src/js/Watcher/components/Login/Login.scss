@@ -5,13 +5,15 @@
 
 #login-box {
     padding: 20px;
-    background: white;
-    border: solid 1px #d3d3d3;
-    border-radius: 2px;
+    background: #525252;
+    border: solid 1px #313131;
+    border-radius: 4px;
     width: 100%;
     max-width: 400px;
     margin: 0px auto;
     position: relative;
+    color: #939393;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 #login-form {

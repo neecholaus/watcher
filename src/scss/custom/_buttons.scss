@@ -21,7 +21,14 @@
     display: inline-block;
 
     &.btn-utility {
-        @include button($primary, $primary-hover, $primary-light);
+        border: solid 1px $darkest;
+        background: $dark;
+        color: $dimmer;
+        border-radius: 4px;
+
+        &:hover {
+            background-color: $dim;
+        }
     }
 
     &.btn-primary {

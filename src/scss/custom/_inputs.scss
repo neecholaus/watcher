@@ -1,19 +1,19 @@
 input {
     &:not([type="file"]) {
-        background: #fafafa;
+        background: $dark;
         color: #989898;
         width: 100%;
-        border: solid 1px #d3d3d3;
+        border: solid 1px $darkest;
         padding: 10px 20px;
-        border-radius: 2px;
+        border-radius: 4px;
         font-family: sans-serif;
         font-size: 14px;
         box-sizing: border-box;
         cursor: pointer;
-        
+
 
         &:hover {
-            background: #f3f3f3;
+            background: $dim;
         }
 
         &:focus {

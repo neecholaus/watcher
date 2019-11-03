@@ -11,11 +11,17 @@ $danger-hover:  #ce493d;
 $light:         #d3d3d3;
 $light-hover:   #bcbcbc;
 
+$dimmer:        #939393;
+$dim:           #636363;
+$dark:          #525252;
+$darker:        #414141;
+$darkest:       #313131;
+
 @import 'buttons';
 @import 'fonts';
 @import 'global-helpers';
 @import 'images';
 @import 'inputs';
 @import 'margin';
-@import 'navbar';
+// @import 'navbar';
 @import 'padding';
