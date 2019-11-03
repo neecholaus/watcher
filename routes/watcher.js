@@ -265,7 +265,7 @@ const storage = multer.diskStorage({
         let filename = Date.now().toString() + path.extname(file.originalname);
         new Capture({
             _id: new mongoose.Types.ObjectId(),
-            path: `/uploads/${filename}`,
+            path: `${process.env.UPLOAD_PATH}/${filename}`,
             filename: filename,
             taken_at: req.body.taken_at
         })
@@ -293,7 +293,7 @@ router.post('/api-upload', (req, res) => {
     const filename = Date.now().toString() + '.png';
     let file = Buffer.from(req.body.file);
 
-    fs.writeFileSync(`uploads/${filename}`, file);
+    fs.writeFileSync(`${process.env.UPLOAD_PATH}/${filename}`, file);
 
     new Capture({
         _id: new mongoose.Types.ObjectId(),
