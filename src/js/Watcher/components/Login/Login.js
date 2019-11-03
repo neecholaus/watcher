@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {Redirect} from 'react-router-dom';
 
-import './Login.scss';
-
 class Login extends Component {
     state = {
         email: '',
@@ -44,9 +42,9 @@ class Login extends Component {
         if(redirectToReferrer) return <Redirect to={from} />;
 
         return (
-            <div id="login-con">
-                <div id="login-box">
-                    <h2>Login</h2>
+            <div className="container">
+                <div className="block">
+                    <h2 style={{color:'#e3e3e3'}}>Login</h2>
                     <input
                         type="text"
                         placeholder="Email"
