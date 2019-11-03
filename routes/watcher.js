@@ -15,7 +15,8 @@ let authUrl = `mongodb://${mongoUser}:${mongoPass}@localhost:27017/watcher?authS
 mongoose.connect(authUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 }, function(err) {
     if(err) throw err;
 });
@@ -85,7 +86,7 @@ router.get(['/', clientSideRoutes], (req, res) => {
  */
 router.param('token', function(req, res, next, token) {
     let newToken = rToken.generate(25);
-    User.findOneAndUpdate({token}, {token:newToken}, (err, data) => {
+    User.findOneAndUpdate({token}, {$set: {token:newToken}}, (err, data) => {
         if(data) {
             req.session.user = data;
             res.json({
@@ -108,12 +109,20 @@ router.get('/verify-token/:token', (req, res) => {
  * Handle login submission
  */
 router.post('/login', (req, res) => {
-    console.log('attempting login');
     User.findOne({
         email: req.body.email
     }, (err, data) => {
         let passwordMatch = data ? bcrypt.compareSync(req.body.password, data.password): false;
         if(data && passwordMatch) {
+            // if user has not been used yet, set initial token
+            if(!data.token) {
+                data.token = rToken.generate(25);
+                User.findOneAndUpdate(
+                    {email: data.email},
+                    {$set: {token: data.token}
+                }).exec();
+            }
+
             req.session.user = data;
             res.json({
                 success: true,
@@ -147,7 +156,8 @@ router.post('/login', (req, res) => {
  */
 router.post('/logout', (req, res) => {
     req.session.user = null;
-    return;
+    res.status(200);
+    res.end();
 });
 
 
@@ -323,11 +333,12 @@ router.post('/most-recent', (req, res) => {
 
 router.post('/times', (req, res) => {
     Capture.find().select({taken_at:1, filename:1, _id:0}).sort({taken_at: -1})
-        .then((result) => {
+        .then(result => {
             res.status(200);
             res.json(result);
+            res.end();
         })
-        .catch((err) => {
+        .catch(err => {
             res.status(500);
             res.end();
         });

@@ -21,6 +21,7 @@ class Login extends Component {
         })
             .then(res => res.json())
             .then(res => {
+                console.log(res);
                 if(res.success) {
                     window.sessionStorage.setItem('token', res.token);
                     this.props.login();
@@ -46,7 +47,7 @@ class Login extends Component {
             <div id="login-con">
                 <div id="login-box">
                     <h2>Login</h2>
-                    <input 
+                    <input
                         type="text"
                         placeholder="Email"
                         name="email"
@@ -54,7 +55,7 @@ class Login extends Component {
                         onChange={this.onChange}
                         value={this.state.email}
                         required />
-                    <input 
+                    <input
                         type="password"
                         className="mt-20"
                         placeholder="Password"

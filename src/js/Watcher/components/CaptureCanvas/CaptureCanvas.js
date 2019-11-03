@@ -13,6 +13,8 @@ class CaptureCanvas extends Component {
     }
 
     fetchMostRecent = () => {
+        // for now
+        return;
         fetch('/watcher/most-recent', {method:'POST'})
             .then(res => res.json())
             .then(res => {
@@ -47,6 +49,8 @@ class CaptureCanvas extends Component {
     }
 
     fetchTimes = () => {
+        // for now
+        return;
         this.times = null;
         setTimeout(() => {
             fetch('/watcher/times', {method:'POST'})
@@ -85,12 +89,12 @@ class CaptureCanvas extends Component {
                 <div id="left-con">
                     <div className="column">
                         <h3>Find a moment</h3>
-                        <select 
+                        <select
                             name="time"
                             onChange={this.setSpecificCapture}>
                             <option defaultValue value="default">Please Select a Time:</option>
                             {this.state.times.map(time => (
-                                <option 
+                                <option
                                     key={time.filename}
                                     value={time.filename}>
                                     {this.formatDate(time.taken_at)}
@@ -98,12 +102,12 @@ class CaptureCanvas extends Component {
                             ))}
                         </select>
                         <hr/>
-                        <button 
+                        <button
                             className="btn btn-primary mr-10"
                             onClick={this.fetchTimes}>
                             Reload
                         </button>
-                        <button 
+                        <button
                             className="btn btn-primary"
                             onClick={() => {this.setState({specificCaptureSrc: null})}}>
                             Live
@@ -113,18 +117,18 @@ class CaptureCanvas extends Component {
                 <div id="right-con">
                     <div className="column">
                         {this.state.specificCaptureSrc ? (
-                                <img 
+                                <img
                                     src={this.state.specificCaptureSrc}
-                                    className="fluid" 
+                                    className="fluid"
                                     alt="Specific Moment" />
                         ) : this.state.currentCaptureSrc && this.state.currentCapture ? (
                             <div>
                                 <p className="mb-0"><span className="text-muted">Taken:</span> <b>{this.state.currentCapture.taken_at}</b></p>
                                 <hr/>
                                 <div className="text-center">
-                                    <img 
+                                    <img
                                         src={this.state.currentCaptureSrc}
-                                        className="fluid" 
+                                        className="fluid"
                                         alt="Current Feed" />
                                 </div>
                             </div>

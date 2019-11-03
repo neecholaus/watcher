@@ -54,6 +54,7 @@ class Watcher extends Component {
         fetch(`/watcher/verify-token/${token}`)
             .then(res => res.json())
             .then(res => {
+                console.log(res);
                 if(res.valid) {
                     ls.setItem('token', res.token);
                     this.login();
