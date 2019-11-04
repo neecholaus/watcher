@@ -7,25 +7,25 @@ class UploadImage extends Component {
         const takenAt = new Date();
 
         return (
-            <div id="container">
-                <div id="content">
+            <div className="container">
+                <div className="block">
                     <h3 className="mt-20 mb-20">Upload Image</h3>
-                    <form 
-                        action="/watcher/upload" 
-                        method="POST" 
+                    <form
+                        action="/watcher/upload"
+                        method="POST"
                         encType="multipart/form-data">
-                        <input 
+                        <input
                             type="hidden"
-                            name="taken_at" 
+                            name="taken_at"
                             value={takenAt} />
-                        <div className="p-20 mt-20 mb-20 bg-light">
-                            <input 
-                                type="file" 
+                        <div className="p-20 mt-20 mb-20 bg-dark border-darkest">
+                            <input
+                                type="file"
                                 name="file" />
                         </div>
-                        <button 
+                        <button
                             type="submit"
-                            className="btn btn-primary">
+                            className="btn btn-utility">
                             <i className="fa fa-upload"></i> Upload
                         </button>
                     </form>
