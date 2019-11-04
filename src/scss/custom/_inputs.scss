@@ -1,7 +1,7 @@
 input {
     &:not([type="file"]) {
         background: $dark;
-        color: #989898;
+        color: $dimmer;
         width: 100%;
         border: solid 1px $darkest;
         padding: 10px 20px;
@@ -33,21 +33,21 @@ select {
     -moz-appearance: none;
     appearance: none;
     box-sizing: border-box;
-    background: #f3f3f3;
-    color: #898989;
+    background: $dark;
+    border: solid 1px $darkest;
+    color: $dimmer;
     width: 100%;
-    border: none;
-    padding: 13px 20px;
+    padding: 8px 20px;
     border-radius: 4px;
     font-family: sans-serif;
     font-size: 14px;
 
     &:hover {
-        background: #e9e9e9;
+        background: $dim;
     }
 
     &:focus {
-        background: #e9e9e9;
+        background: $dim;
         outline: none !important;
         box-shadow: none !important;
     }

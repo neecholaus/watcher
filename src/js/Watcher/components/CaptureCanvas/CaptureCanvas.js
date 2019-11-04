@@ -103,12 +103,12 @@ class CaptureCanvas extends Component {
                         </select>
                         <hr/>
                         <button
-                            className="btn btn-primary mr-10"
+                            className="btn btn-utility mr-10"
                             onClick={this.fetchTimes}>
                             Reload
                         </button>
                         <button
-                            className="btn btn-primary"
+                            className="btn btn-utility"
                             onClick={() => {this.setState({specificCaptureSrc: null})}}>
                             Live
                         </button>
