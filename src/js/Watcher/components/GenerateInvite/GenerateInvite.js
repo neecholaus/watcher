@@ -39,27 +39,28 @@ class GenerateInvite extends Component {
         let generateIcon = 'fa fa-refresh';
 
         return (
-            <div id="container">
-                <div id="content">
+            <div className="container">
+                <div className="block">
                 <h3 className="mt-20 mb-10">Generate invite link</h3>
 
-                {this.state.token ? (
-                    <div className="bg-light p-20 mb-10 text-muted rounded">
-                        <p className="m-0">https://nickneuman.co/watcher/register?token=<span className="text-success bold">{this.state.token}</span></p>
-                    </div>
-                ) : null}
+                <div style={{background: '#414141', border: 'solid 1px #313131'}} className="p-20 mb-10 text-muted rounded">
+                    {this.state.token
+                    ? (<p className="m-0">https://nickneuman.co/watcher/register?token=<span className="text-success bold">{this.state.token}</span></p>)
+                    : (<p className="m-0">Nothing generated yet.</p>)
+                    }
+                </div>
 
-                <button 
+                <button
                     type="button"
-                    className="btn btn-primary mr-10"
+                    className="btn btn-utility mr-10"
                     onClick={this.fetchToken}>
                     <i className={generateIcon}></i> { this.state.token ? 'New' : 'Generate' }
                 </button>
 
                 {this.state.token ? (
-                    <button 
+                    <button
                         type="button"
-                        className="btn btn-primary"
+                        className="btn btn-utility"
                         onClick={this.copyLink}>
                         <i className="fa fa-clipboard"></i> Copy
                     </button>
