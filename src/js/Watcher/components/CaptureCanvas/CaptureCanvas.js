@@ -13,8 +13,6 @@ class CaptureCanvas extends Component {
     }
 
     fetchMostRecent = () => {
-        // for now
-        return;
         fetch('/watcher/most-recent', {method:'POST'})
             .then(res => res.json())
             .then(res => {
@@ -49,8 +47,6 @@ class CaptureCanvas extends Component {
     }
 
     fetchTimes = () => {
-        // for now
-        return;
         this.times = null;
         setTimeout(() => {
             fetch('/watcher/times', {method:'POST'})
@@ -87,7 +83,7 @@ class CaptureCanvas extends Component {
         return (
             <div className="mt-3" id="row">
                 <div id="left-con">
-                    <div className="column">
+                    <div className="block">
                         <h3>Find a moment</h3>
                         <select
                             name="time"
@@ -115,7 +111,7 @@ class CaptureCanvas extends Component {
                     </div>
                 </div>
                 <div id="right-con">
-                    <div className="column">
+                    <div className="block">
                         {this.state.specificCaptureSrc ? (
                                 <img
                                     src={this.state.specificCaptureSrc}
