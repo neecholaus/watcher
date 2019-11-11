@@ -62,7 +62,7 @@ class GenerateInvite extends Component {
                         type="button"
                         className="btn btn-utility"
                         onClick={this.copyLink}>
-                        <i className="fa fa-clipboard"></i> Copy
+                        <i className="fa fa-copy"></i> Copy
                     </button>
                 ) : null}
                 </div>

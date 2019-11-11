@@ -7,7 +7,7 @@
     min-height: calc(100vh);
 }
 
-#navbar {
+#navbar-container {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -18,23 +18,32 @@
     padding: 10px;
     box-sizing: border-box;
 
-    .nav-link {
-        cursor: pointer;
-        border: solid 1px $darkest;
-        background: $dark;
-        text-decoration: none;
-        border-radius: 4px;
-        margin: 0 5px;
-        font-size: 14px;
-        line-height: 16px;
-        color: #939393;
-        padding: 6px 20px;
-        box-sizing: border-box;
-        display: inline-block;
+    #navbar {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 400px;
+        display: flex;
 
-        &:hover {
-            border-color: $darkest;
-            background: $dim;
+        .nav-link {
+            cursor: pointer;
+            border: solid 1px $darkest;
+            background: $dark;
+            text-decoration: none;
+            border-radius: 4px;
+            flex-grow: 1;
+            text-align: center;
+            margin: 0 5px;
+            font-size: 14px;
+            line-height: 16px;
+            color: #939393;
+            padding: 6px 20px;
+            // box-sizing: border-box;
+            // display: inline-block;
+
+            &:hover {
+                border-color: $darkest;
+                background: $dim;
+            }
         }
     }
 }
