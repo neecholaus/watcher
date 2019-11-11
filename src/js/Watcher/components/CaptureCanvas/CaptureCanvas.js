@@ -64,7 +64,7 @@ class CaptureCanvas extends Component {
         this.setState({specificCaptureSrc: '/watcher/capture/' + e.target.value});
     }
 
-    componentDidMount = () => {
+    UNSAFE_componentDidMount = () => {
         let self = this;
 
         // Get times for selector

@@ -76,24 +76,24 @@ class Watcher extends Component {
                         <div id="navbar">
                             {auth.isAuthenticated ? (
                                 <a className="nav-link" onClick={this.logout}>
-                                    <i class="fa fa-sign-out-alt"></i>
+                                    <i className="fa fa-sign-out-alt"></i>
                                 </a>
                             ) : null}
 
                             <Link
                                 to="/watcher/upload-image"
                                 className="nav-link">
-                                    <i class="fa fa-file-upload"></i>
+                                    <i className="fa fa-file-upload"></i>
                             </Link>
                             <Link
                                 to="/watcher/generate-invite"
                                 className="nav-link">
-                                    <i class="fa fa-user-plus"></i>
+                                    <i className="fa fa-user-plus"></i>
                             </Link>
                             <Link
                                 to="/watcher/capture-canvas"
                                 className="nav-link">
-                                    <i class="fa fa-images"></i>
+                                    <i className="fa fa-images"></i>
                             </Link>
                         </div>
                     </div>
